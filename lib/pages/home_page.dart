@@ -213,7 +213,7 @@ class _TopRatedSectionState extends State<TopRatedSection> {
             );
           } else if (snapshot.connectionState == ConnectionState.done){
             return ListCardBannerComponent(
-              titleSection: "Populer",
+              titleSection: "Top Rated",
               data: snapshot.data ?? [],
             );
           } else {

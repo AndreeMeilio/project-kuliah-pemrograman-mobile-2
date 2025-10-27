@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:movies_app_pertemuan_5_assignment/data/models/movies_model.dart';
+import 'package:movies_app_pertemuan_5_assignment/utils/colors_util.dart';
 
 class NowPlayingCardBannerComponent extends StatelessWidget {
   const NowPlayingCardBannerComponent({
@@ -23,76 +24,99 @@ class NowPlayingCardBannerComponent extends StatelessWidget {
       ),
       child: Align(
         alignment: Alignment.bottomLeft,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.end,
-          spacing: 8.0,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(
-                color: Colors.black.withAlpha(125)
-              ),
-              child: Text(
-                data?.title ?? "",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18.0
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              decoration: BoxDecoration(
-                color: Colors.black.withAlpha(125)
-              ),
-              height: 25,
-              width: double.infinity,
-              child: Row(
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.end,
                 spacing: 8.0,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    data?.year ?? "",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withAlpha(125)
+                    ),
+                    child: Text(
+                      data?.title ?? "",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16.0
+                      ),
                     ),
                   ),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: (data?.genre != null) ? data!.genre!.map<Widget>((data){
-                          return Text(
-                            "$data ",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withAlpha(125)
+                    ),
+                    height: 25,
+                    width: double.infinity,
+                    child: Row(
+                      spacing: 8.0,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          data?.year ?? "",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14.0
+                          ),
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: (data?.genre != null) ? data!.genre!.map<Widget>((data){
+                                return Text(
+                                  "$data ",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14.0
+                                  ),
+                                );
+                              }).toList() : []
                             ),
-                          );
-                        }).toList() : []
+                          )
+                        )
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withAlpha(125)
+                    ),
+                    child: Text(
+                      data?.sinopsis ?? "",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.0
                       ),
-                    )
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   )
                 ],
               ),
             ),
             Container(
-              margin: const EdgeInsets.only(bottom: 16.0),
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               decoration: BoxDecoration(
-                color: Colors.black.withAlpha(125)
+                shape: BoxShape.circle,
+                color: Colors.white
               ),
-              child: Text(
-                data?.sinopsis ?? "",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 16.0),
+              child: IconButton(
+                iconSize: 25,
+                color: Colors.white,
+                splashColor: ColorUtil.background,
+                onPressed: (){
+
+                }, 
+                icon: Icon(Icons.arrow_forward_ios_outlined, color: ColorUtil.background,)
               ),
             )
           ],
