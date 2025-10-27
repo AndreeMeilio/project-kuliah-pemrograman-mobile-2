@@ -1,0 +1,22 @@
+[
+    {
+        "title": "The Shawshank Redemption",
+        "url": "assets/images/theshawshank.jpeg"
+    },
+    {
+        "title": "The Godfather",
+        "url": "assets/images/thegodfather.jpeg"
+    },
+    {
+        "title": "The Dark Knight",
+        "url": "assets/images/thedarkknight.jpeg"
+    },
+    {
+        "title": "Schindler’s List",
+        "url": "assets/images/schindler.jpeg"
+    },
+    {
+        "title": "Pulp Fiction",
+        "url": "assets/images/pulpfiction.jpeg"
+    }
+]

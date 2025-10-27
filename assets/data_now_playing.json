@@ -1,0 +1,42 @@
+[
+    {
+        "id" : 1,
+        "url" : "assets/images/deadpoolandwolverine.jpeg",
+        "title": "Deadpool & Wolverine",
+        "year": "2024",
+        "genre": ["Action", "Comedy"],
+        "sinopsis": "Wade Wilson (Deadpool) harus menghadapi masa lalunya dan kemudian berkelompok dengan Wolverine untuk menyelamatkan dunia yang terancam. Kedua karakter yang sangat kontras ini harus belajar bekerja sama sambil menghadapi musuh dan masalah besar. Hiburan penuh humor ganas dan aksi brutal menanti para penggemar."
+    },
+    {
+        "id" : 2,
+        "url" : "assets/images/aliceinborderland.jpeg",
+        "title": "Alice in Borderland Season 3",
+        "year": "2025",
+        "genre": ["Thriller", "Survival Game"],
+        "sinopsis": "Seorang pemuda tanpa arah bersama dua temannya tiba-tiba terlempar ke versi alternatif Tokyo yang kosong, dan mereka dipaksa ikut dalam permainan sadis yang mempertaruhkan nyawa. Mereka harus bertahan, memecahkan teka-teki dan mencari cara keluar dari permainan. Ketika mereka semakin dalam, mereka menyadari bahwa bukan hanya permainan—tapi suatu sistem yang kejam."
+    },
+    {
+        "id" : 3,
+        "url" : "assets/images/squidgames3.jpeg",
+        "title": "Squid Game Season 3",
+        "year": "2025",
+        "genre": ["Thriller", "Survival Game"],
+        "sinopsis": "Setelah pemberontakan gagal dan kematian teman dekatnya, Seong Gi-hun kembali ke permainan mematikan, menghadapi tantangan yang lebih brutal dan makna yang lebih dalam tentang hidup dan bertahan. Sementara itu, Front Man dan VIP terus mengatur game dari balik layar, dengan pengkhianatan yang mengintai di tengah para pemain. Pertaruhan menjadi semakin tinggi—bukan hanya untuk menang, tapi untuk selamat dan menuntut keadilan."
+    },
+    {
+        "id" : 4,
+        "url" : "assets/images/kny.jpeg",
+        "title": "Demon Slayer: Kimetsu no Yaiba – The Movie: Infinity Castle",
+        "year": "2025",
+        "genre": ["Anime", "Action", "Fantasy"],
+        "sinopsis": "Korps Pembasmi Iblis menghadapi pertarungan terakhir di dalam “Infinity Castle”, saat Tanjiro, Nezuko dan para Hashira menyusup ke benteng iblis untuk menghadapi Upper Rank yang paling berbahaya. Taruhannya meningkat: bukan sekadar nyawa, tapi nasib seluruh umat manusia. Dalam kekacauan dan keputusasaan, harapan dan pengorbanan menjadi satu-satunya senjata yang tersisa."
+    },
+    {
+        "id" : 5,
+        "url" : "assets/images/thenewavengers.jpeg",
+        "title": "The New Avengers",
+        "year": "2025",
+        "genre": ["Superhero", "Action"],
+        "sinopsis": "Sebuah tim anti-hero yang tidak konvensional (termasuk Yelena Belova, Bucky Barnes, Red Guardian, Ghost, Taskmaster dan John Walker) terperangkap dalam jebakan kematian yang dirancang oleh Valentina Allegra de Fontaine. Mereka harus bekerja sama untuk misi yang sangat berbahaya — dan menemukan apakah mereka bisa berubah menjadi sesuatu lebih besar dari diri mereka sendiri sebelum terlambat. Dalam prosesnya, mereka mungkin bukan “Avengers” seperti sebelumnya, tapi mereka menjadi “The New Avengers”."
+    }
+]
