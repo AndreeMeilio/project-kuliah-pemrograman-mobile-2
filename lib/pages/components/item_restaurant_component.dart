@@ -155,7 +155,7 @@ class ItemRestaurantComponent extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 8.0),
                     child: Center(
                       child: Text(
-                        "Detail",
+                        "DETAIL",
                         style: TextStyle(fontSize: 20.0),
                       ),
                     ),

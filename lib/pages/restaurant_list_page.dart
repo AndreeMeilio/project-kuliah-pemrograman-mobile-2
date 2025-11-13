@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rest_well_aurant/cubit/customer_review_list_cubit.dart';
+import 'package:rest_well_aurant/cubit/restaurant_detail_cubit.dart';
 import 'package:rest_well_aurant/cubit/restaurant_list_cubit.dart';
 import 'package:rest_well_aurant/data/models/restaurant_model.dart';
 import 'package:rest_well_aurant/pages/components/itemRestaurantLoadingComponent.dart';
@@ -26,13 +28,6 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
 
     _cubit = BlocProvider.of<RestaurantListCubit>(context, listen: false);
     _cubit.getListRestaurant();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-
-    _cubit.close();
   }
 
   @override
@@ -79,7 +74,17 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
                           description: data[index].description ?? "",
                           detailOnTap: (){
                             Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => RestaurantDetailPage(data: data[index]),
+                              builder: (context) => MultiBlocProvider(
+                                providers: [
+                                  BlocProvider<RestaurantDetailCubit>(
+                                    create: (context) => RestaurantDetailCubit(),
+                                  ),
+                                  BlocProvider<CustomerReviewListCubit>(
+                                    create: (context) => CustomerReviewListCubit(),
+                                  )
+                                ], 
+                                child: RestaurantDetailPage(data: data[index])
+                              ),
                             ));
                           },
                         );
