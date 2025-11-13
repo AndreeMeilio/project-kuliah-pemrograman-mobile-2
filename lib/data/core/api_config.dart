@@ -2,6 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:rest_well_aurant/data/core/api_constant.dart';
+import 'package:rest_well_aurant/data/core/api_retry_interceptor.dart';
 
 class ApiConfig {
   static Dio? dio;
@@ -15,6 +16,11 @@ class ApiConfig {
     dio!.options.receiveTimeout = ApiConstant.receiveTimeout;
     
     dio!.interceptors.add(dioLogger());
+    dio!.interceptors.add(ApiRetryInterceptor(
+      dio: dio!,
+      maxRetries: 5,
+      retryDelay: const Duration(seconds: 1)
+    ));
 
     return dio!;
   }
