@@ -5,33 +5,16 @@ import 'package:products/domains/entities/product_rating.dart';
 
 class CreateProduct {
   final ProductRepository _repository;
-  final String title;
-  final double price;
-  final String? description;
-  final String? category;
-  final String? image;
-  final double? rate;
-  final int? count;
+  final Product product;
 
   CreateProduct(
     this._repository,
-    {required this.title, required this.price, this.description, this.category,this.image, this.rate, this.count}
+    {required this.product}
   );
 
   Future<GenericModelOrEntityResponse<Product>> call() async{
-    final dataRequestProduct = Product(
-      title: title,
-      price: price,
-      description: description,
-      category: category,
-      image: image,
-      rating: ProductRating(
-        rate: rate,
-        count: count
-      )
-    );
 
-    final createDataFromRepository = await _repository.createNewProduct(data: dataRequestProduct);
+    final createDataFromRepository = await _repository.createNewProduct(data: product);
 
     final dataResponse = Product(
       id: createDataFromRepository.data.id,

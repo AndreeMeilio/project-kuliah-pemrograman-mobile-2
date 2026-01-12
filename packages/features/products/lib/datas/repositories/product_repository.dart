@@ -9,11 +9,9 @@ import 'package:products/datas/models/product_rating_model.dart';
 import 'package:products/domains/entities/product.dart';
 
 class ProductRepositoryImpl extends ProductRepository {
-  late ProductRemoteDataSource _remoteDataSource;
+  final ProductRemoteDataSource _remoteDataSource;
 
-  ProductRepositoryImpl(ProductRemoteDataSource remoteDataSource){
-    _remoteDataSource = remoteDataSource;
-  }
+  ProductRepositoryImpl(this._remoteDataSource);
 
   @override
   Future<GenericModelOrEntityResponse<ProductModel>> createNewProduct({required Product data}) async{
