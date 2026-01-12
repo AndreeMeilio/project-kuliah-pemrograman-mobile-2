@@ -1,5 +1,3 @@
-import 'package:core/component/buttons/primary_button_component.dart';
-import 'package:core/constant/colors.dart';
 import 'package:core/constant/numbers.dart';
 import 'package:core/constant/spacings.dart';
 import 'package:core/constant/text_styles_enum.dart';

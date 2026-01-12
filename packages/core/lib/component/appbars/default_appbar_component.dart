@@ -1,4 +1,3 @@
-import 'package:core/constant/colors.dart';
 import 'package:core/constant/text_styles_enum.dart';
 import 'package:core/utils/text_styles.dart';
 import 'package:flutter/material.dart';

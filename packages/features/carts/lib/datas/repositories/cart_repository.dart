@@ -5,10 +5,7 @@ import 'package:carts/datas/data_sources/remote_data_source.dart';
 import 'package:carts/datas/models/cart_model.dart';
 import 'package:carts/datas/models/cart_product_detail_model.dart';
 import 'package:carts/domains/entities/cart.dart';
-import 'package:carts/domains/entities/cart_product_detail.dart';
-import 'package:core/constant/response_code.dart';
-import 'package:core/domain/cart_repository.dart';
-import 'package:core/utils/generic_model_or_entity_response.dart';
+import 'package:core/core.dart';
 
 class CartRepositoryImpl extends CartRepository {
   final CartRemoteDataSource _remoteDataSource;

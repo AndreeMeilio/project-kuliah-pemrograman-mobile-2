@@ -2,17 +2,15 @@
 import 'package:carts/domains/entities/cart.dart';
 import 'package:carts/domains/entities/cart_product_detail.dart';
 import 'package:core/core.dart';
-import 'package:core/domain/cart_repository.dart';
 
 class GetAllCartByUser{
   final CartRepository _repository;
-  final int id;
   
-  GetAllCartByUser(this._repository, {
-    required this.id,
-  });
+  GetAllCartByUser(this._repository);
 
-  Future<GenericModelOrEntityResponse<List<Cart>>> call() async{
+  Future<GenericModelOrEntityResponse<List<Cart>>> call({
+    required int id
+  }) async{
     final dataFromRepository = await _repository.getAllCartByUser(
       id: id,
     );

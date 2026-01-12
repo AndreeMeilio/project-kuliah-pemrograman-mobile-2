@@ -2,15 +2,15 @@
 import 'package:carts/domains/entities/cart.dart';
 import 'package:carts/domains/entities/cart_product_detail.dart';
 import 'package:core/core.dart';
-import 'package:core/domain/cart_repository.dart';
 
 class DeleteCart{
   final CartRepository _repository;
-  final int id;
   
-  DeleteCart(this._repository, {required this.id});
+  DeleteCart(this._repository);
 
-  Future<GenericModelOrEntityResponse<Cart>> call() async{
+  Future<GenericModelOrEntityResponse<Cart>> call({
+    required int id
+  }) async{
     final deleteDataFromRepository = await _repository.deleteCart(id: id);
 
     final dataCartResponse = Cart(

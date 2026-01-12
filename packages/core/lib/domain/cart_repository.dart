@@ -1,6 +1,5 @@
 
-import 'package:carts/datas/models/cart_model.dart';
-import 'package:carts/domains/entities/cart.dart';
+import 'package:carts/carts.dart';
 import 'package:core/utils/generic_model_or_entity_response.dart';
 
 abstract class CartRepository {

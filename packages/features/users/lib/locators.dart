@@ -1,5 +1,5 @@
 
-import 'package:core/domain/user_repository.dart';
+import 'package:core/core.dart';
 import 'package:get_it/get_it.dart';
 import 'package:users/datas/data_sources/remote_data_source.dart';
 import 'package:users/datas/repositories/user_repository.dart';

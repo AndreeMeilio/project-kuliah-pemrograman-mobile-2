@@ -1,17 +1,17 @@
 
 import 'package:core/core.dart';
-import 'package:core/domain/user_repository.dart';
 import 'package:users/domains/entities/user.dart';
 import 'package:users/domains/entities/user_address.dart';
 import 'package:users/domains/entities/user_name.dart';
 
 class GetDetailUser{
   final UserRepository _repository;
-  final int id;
   
-  GetDetailUser(this._repository, {required this.id});
+  GetDetailUser(this._repository);
 
-  Future<GenericModelOrEntityResponse<User>> call() async{
+  Future<GenericModelOrEntityResponse<User>> call({
+    required int id
+  }) async{
     final dataFromRepository = await _repository.getSingleUser(id: id);
 
     final User dataUserResponse = User(

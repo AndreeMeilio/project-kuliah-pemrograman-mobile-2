@@ -5,11 +5,12 @@ import 'package:products/domains/entities/product_rating.dart';
 
 class GetSingleProduct {
   final ProductRepository _repository;
-  final int id;
 
-  GetSingleProduct(this._repository, {required this.id});
+  GetSingleProduct(this._repository);
 
-  Future<GenericModelOrEntityResponse<Product>> call() async{
+  Future<GenericModelOrEntityResponse<Product>> call({
+    required int id
+  }) async{
     final dataFromRepository = await _repository.getSingleProduct(id: id);
 
     final product = Product(

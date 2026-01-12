@@ -5,11 +5,12 @@ import 'package:products/domains/entities/product_rating.dart';
 
 class GetProductByCategory {
   final ProductRepository _repository;
-  final String category;
 
-  GetProductByCategory(this._repository, {required this.category});
+  GetProductByCategory(this._repository);
 
-  Future<GenericModelOrEntityResponse<List<Product>>> call() async{
+  Future<GenericModelOrEntityResponse<List<Product>>> call({
+    required String category
+  }) async{
     final dataFromRepository = await _repository.getProductByCategory(
       category: category
     );

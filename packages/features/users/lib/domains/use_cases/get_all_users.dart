@@ -1,6 +1,5 @@
 
 import 'package:core/core.dart';
-import 'package:core/domain/user_repository.dart';
 import 'package:users/domains/entities/user.dart';
 import 'package:users/domains/entities/user_address.dart';
 import 'package:users/domains/entities/user_name.dart';

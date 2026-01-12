@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:core/constant/response_code.dart';
-import 'package:core/domain/product_repository.dart';
-import 'package:core/utils/generic_model_or_entity_response.dart';
+import 'package:core/core.dart';
 import 'package:products/datas/data_sources/remote_data_source.dart';
 import 'package:products/datas/models/product_model.dart';
 import 'package:products/datas/models/product_rating_model.dart';

@@ -2,7 +2,6 @@
 import 'package:carts/domains/entities/cart.dart';
 import 'package:carts/domains/entities/cart_product_detail.dart';
 import 'package:core/core.dart';
-import 'package:core/domain/cart_repository.dart';
 
 class GetAllCarts{
   final CartRepository _repository;

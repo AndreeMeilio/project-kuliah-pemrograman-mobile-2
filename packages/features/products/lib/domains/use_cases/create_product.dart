@@ -5,14 +5,14 @@ import 'package:products/domains/entities/product_rating.dart';
 
 class CreateProduct {
   final ProductRepository _repository;
-  final Product product;
 
   CreateProduct(
-    this._repository,
-    {required this.product}
+    this._repository
   );
 
-  Future<GenericModelOrEntityResponse<Product>> call() async{
+  Future<GenericModelOrEntityResponse<Product>> call({
+    required Product product
+  }) async{
 
     final createDataFromRepository = await _repository.createNewProduct(data: product);
 

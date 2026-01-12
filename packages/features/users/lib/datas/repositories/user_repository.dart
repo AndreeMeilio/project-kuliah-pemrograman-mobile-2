@@ -1,9 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:core/constant/response_code.dart';
-import 'package:core/domain/user_repository.dart';
-import 'package:core/utils/generic_model_or_entity_response.dart';
+import 'package:core/core.dart';
 import 'package:users/datas/data_sources/remote_data_source.dart';
 import 'package:users/datas/models/user_address_model.dart';
 import 'package:users/datas/models/user_model.dart';

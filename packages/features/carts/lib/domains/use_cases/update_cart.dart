@@ -2,16 +2,16 @@
 import 'package:carts/domains/entities/cart.dart';
 import 'package:carts/domains/entities/cart_product_detail.dart';
 import 'package:core/core.dart';
-import 'package:core/domain/cart_repository.dart';
 
 class UpdateCart{
   final CartRepository _repository;
-  final Cart dataRequest;
-  final int id;
   
-  UpdateCart(this._repository, {required this.dataRequest, required this.id});
+  UpdateCart(this._repository);
 
-  Future<GenericModelOrEntityResponse<Cart>> call() async{
+  Future<GenericModelOrEntityResponse<Cart>> call({
+    required Cart dataRequest,
+    required int id
+  }) async{
     final createDataToRepository = await _repository.updateCart(data: dataRequest, id: id);
 
     final dataCartResponse = Cart(

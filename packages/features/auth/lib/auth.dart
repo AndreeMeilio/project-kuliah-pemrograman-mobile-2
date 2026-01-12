@@ -1,5 +1,12 @@
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+library;
+
+export 'datas/models/auth_model.dart';
+export 'domains/entities/auth.dart';
+
+export 'locators.dart';
+
+// PAGES
+export 'presentations/pages/login_pages.dart';
+
+// CUBITS
+export 'presentations/cubits/login_cubit.dart';

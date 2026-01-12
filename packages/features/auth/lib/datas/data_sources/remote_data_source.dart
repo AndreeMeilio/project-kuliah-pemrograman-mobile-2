@@ -1,8 +1,7 @@
 
 import 'package:auth/api_endpoint.dart';
 import 'package:auth/datas/models/auth_model.dart';
-import 'package:core/network/api_helper.dart';
-import 'package:core/responses/api_helper_response.dart';
+import 'package:core/core.dart';
 
 abstract class AuthRemoteDataSource {
   Future<ApiHelperResponse> login({required AuthModel data});

@@ -1,6 +1,4 @@
 
-import 'package:core/constant/colors.dart';
-import 'package:core/constant/spacings.dart';
 import 'package:flutter/material.dart';
 
 class IconButtonComponent extends StatelessWidget {

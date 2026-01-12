@@ -39,6 +39,9 @@ export 'utils/generic_model_or_entity_response.dart';
 export 'utils/core_assets.dart';
 
 export 'domain/product_repository.dart';
+export 'domain/auth_repository.dart';
+export 'domain/cart_repository.dart';
+export 'domain/user_repository.dart';
 
 
 

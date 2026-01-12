@@ -1,4 +1,3 @@
-import 'package:core/constant/colors.dart';
 import 'package:core/constant/font_weight.dart';
 import 'package:core/constant/numbers.dart';
 import 'package:core/constant/text_styles_enum.dart';

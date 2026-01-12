@@ -3,9 +3,7 @@
 import 'package:auth/domains/entities/auth.dart';
 import 'package:auth/domains/use_cases/login.dart';
 import 'package:auth/presentations/states/login_state.dart';
-import 'package:core/constant/response_code.dart';
-import 'package:core/domain/auth_repository.dart';
-import 'package:core/utils/generic_state.dart';
+import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 typedef LoginGenericState = GenericState<Auth, LoginState>;
@@ -21,11 +19,11 @@ class LoginCubit extends Cubit<LoginGenericState>{
   }) async{
     emit(LoginGenericState(state: LoginLoadingState()));
 
-    final loginUseCase = Login(_repository, dataLogin: Auth(
+    final loginUseCase = Login(_repository);
+    final loginResponse = await loginUseCase(dataLogin: Auth(
       username: username,
       password: password
     ));
-    final loginResponse = await loginUseCase();
 
     if (loginResponse.status == ResponseCodeEnum.success){
       emit(LoginGenericState(

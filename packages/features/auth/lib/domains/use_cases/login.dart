@@ -1,15 +1,15 @@
 
 import 'package:auth/domains/entities/auth.dart';
 import 'package:core/core.dart';
-import 'package:core/domain/auth_repository.dart';
 
 class Login {
   final AuthRepository _repository;
-  final Auth dataLogin;
 
-  Login(this._repository, {required this.dataLogin});
+  Login(this._repository);
 
-  Future<GenericModelOrEntityResponse<Auth>> call() async{
+  Future<GenericModelOrEntityResponse<Auth>> call({
+    required Auth dataLogin 
+  }) async{
     final dataResponse = await _repository.login(data: dataLogin);
 
     return GenericModelOrEntityResponse(

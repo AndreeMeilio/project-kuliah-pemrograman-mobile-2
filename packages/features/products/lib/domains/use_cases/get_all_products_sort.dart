@@ -5,12 +5,13 @@ import 'package:products/domains/entities/product_rating.dart';
 
 class GetAllProductsSort {
   final ProductRepository _repository;
-  final int? limit;
-  final String? sort;
 
-  GetAllProductsSort(this._repository, {this.limit, this.sort});
+  GetAllProductsSort(this._repository);
 
-  Future<GenericModelOrEntityResponse<List<Product>>> call() async{
+  Future<GenericModelOrEntityResponse<List<Product>>> call({
+    int? limit,
+    String? sort
+  }) async{
     final dataFromRepository = await _repository.getAllProduct(
       limit: limit,
       sort: sort

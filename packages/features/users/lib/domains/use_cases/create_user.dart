@@ -1,20 +1,19 @@
 
 import 'package:core/core.dart';
-import 'package:core/domain/user_repository.dart';
 import 'package:users/domains/entities/user.dart';
 import 'package:users/domains/entities/user_address.dart';
 import 'package:users/domains/entities/user_name.dart';
 
 class CreateUser {
   final UserRepository _repository;
-  final User user;
 
   CreateUser(
-    this._repository,
-    {required this.user}
+    this._repository
   );
 
-  Future<GenericModelOrEntityResponse<User>> call() async{
+  Future<GenericModelOrEntityResponse<User>> call({
+    required User user
+  }) async{
 
     final createDataFromRepository = await _repository.createUser(data: user);
 

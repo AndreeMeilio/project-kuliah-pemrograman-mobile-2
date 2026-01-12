@@ -2,23 +2,18 @@
 import 'package:carts/domains/entities/cart.dart';
 import 'package:carts/domains/entities/cart_product_detail.dart';
 import 'package:core/core.dart';
-import 'package:core/domain/cart_repository.dart';
 
 class GetAllCartFilter{
   final CartRepository _repository;
-  final int? limit;
-  final String? sort;
-  final DateTime? startDate;
-  final DateTime? endDate;
   
-  GetAllCartFilter(this._repository, {
-    this.limit,
-    this.sort,
-    this.startDate,
-    this.endDate,
-  });
+  GetAllCartFilter(this._repository);
 
-  Future<GenericModelOrEntityResponse<List<Cart>>> call() async{
+  Future<GenericModelOrEntityResponse<List<Cart>>> call({
+    int? limit,
+    String? sort,
+    DateTime? startDate,
+    DateTime? endDate 
+  }) async{
     final dataFromRepository = await _repository.getAllCart(
       limit: limit,
       sort: sort,

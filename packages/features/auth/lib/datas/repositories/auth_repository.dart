@@ -2,9 +2,7 @@
 import 'package:auth/datas/data_sources/remote_data_source.dart';
 import 'package:auth/datas/models/auth_model.dart';
 import 'package:auth/domains/entities/auth.dart';
-import 'package:core/constant/response_code.dart';
-import 'package:core/domain/auth_repository.dart';
-import 'package:core/utils/generic_model_or_entity_response.dart';
+import 'package:core/core.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
@@ -24,6 +22,7 @@ class AuthRepositoryImpl extends AuthRepository {
       loginRequest.token = loginResponse.response?.data["token"];
     } else {
       loginRequest.token = "";
+      loginResponse.message = loginResponse.response.toString();
     }
 
     return GenericModelOrEntityResponse<AuthModel>(

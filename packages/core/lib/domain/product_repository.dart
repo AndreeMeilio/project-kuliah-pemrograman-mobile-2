@@ -1,7 +1,6 @@
 
 import 'package:core/core.dart';
-import 'package:products/datas/models/product_model.dart';
-import 'package:products/domains/entities/product.dart';
+import 'package:products/products.dart';
 
 abstract class ProductRepository {
   Future<GenericModelOrEntityResponse<List<ProductModel>>> getAllProduct({int? limit, String? sort});
