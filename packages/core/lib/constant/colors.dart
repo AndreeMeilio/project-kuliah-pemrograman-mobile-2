@@ -1,20 +1,31 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color black100 = Color(0xff202020);
-  static const Color black90 = Color(0xff52525B);
-  static const Color black80 = Color(0xff71717A);
-  static const Color black70 = Color(0xffA1A1AA);
-  static const Color black60 = Color(0xffD4D4D8);
-  static const Color black50 = Color(0xffE4E4E7);
-  static const Color black40 = Color(0xffF4F4F5);
+  // Core Brand
+  static const primary = Color(0xFF4FC3F7);
+  static const onPrimary = Color(0xFFFFFFFF);
 
-  static const Color whitePrimary = Color(0xffEEE5E5);
-  static const Color whiteSecondary = Color(0xffDDCECD);
-  static const Color blueSecondary = Color(0xff28AFB0);
-  static const Color bluePrimary = Color(0xff19647E);
-  static const Color blackPrimary = Color(0xff37392E);
+  static const primaryContainer = Color(0xFF0288D1);
+  static const onPrimaryContainer = Color(0xFFFFFFFF);
 
-  static const Color backgroundColor = Color(0xffF9F9F9);
-  static const Color splashColor = Color(0xffA1A1AA);
+  // Secondary
+  static const secondary = Color(0xFF81D4FA);
+  static const onSecondary = Color(0xFF003547);
+
+  // Surface (Material 3)
+  static const surface = Color(0xFFF5FAFF);
+  static const onSurface = Color(0xFF0F172A);
+
+  static const surfaceContainerLowest = Color(0xFFFFFFFF);
+  static const surfaceContainerLow = Color(0xFFE3F2FD);
+  static const surfaceContainer = Color(0xFFD0E8FF);
+  static const surfaceContainerHigh = Color(0xFFB3DAFF);
+  static const surfaceContainerHighest = Color(0xFF9CCEFF);
+
+  // Outline / Divider
+  static const outline = Color(0xFFCBD5E1);
+
+  // Error
+  static const error = Color(0xFFB3261E);
+  static const onError = Color(0xFFFFFFFF);
 }

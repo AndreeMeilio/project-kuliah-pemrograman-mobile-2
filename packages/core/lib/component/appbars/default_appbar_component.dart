@@ -7,13 +7,13 @@ class DefaultAppbarComponent extends StatelessWidget implements PreferredSizeWid
   const DefaultAppbarComponent({
     super.key,
     required this.title,
-    this.backgroundColor = AppColors.backgroundColor,
+    this.backgroundColor,
     this.isCenterTitle = false,
     this.actions
   });
 
   final String title;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final bool isCenterTitle;
   final List<Widget>? actions;
 
@@ -25,7 +25,7 @@ class DefaultAppbarComponent extends StatelessWidget implements PreferredSizeWid
         style: AppTextStyle.kHeading2.get(),
       ),
       centerTitle: isCenterTitle,
-      backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.surface,
       actions: actions,
     );
   }

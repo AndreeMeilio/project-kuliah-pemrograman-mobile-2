@@ -10,21 +10,21 @@ class PrimaryButtonComponent extends StatelessWidget {
     super.key,
     required this.onTap,
     required this.label,
-    this.borderColor = AppColors.blackPrimary,
-    this.buttonColor = AppColors.bluePrimary,
-    this.splashColor = AppColors.splashColor,
+    this.borderColor,
+    this.buttonColor,
+    this.splashColor,
     this.radius = AppNumbers.defaultRadius,
-    this.labelColor = AppColors.whitePrimary,
+    this.labelColor,
     this.isLoading = false
   });
 
-  final Color borderColor;
-  final Color buttonColor;
-  final Color splashColor;
+  final Color? borderColor;
+  final Color? buttonColor;
+  final Color? splashColor;
   final String label;
   final Function()? onTap;
   final double radius;
-  final Color labelColor;
+  final Color? labelColor;
   final bool isLoading;
 
   @override
@@ -32,15 +32,15 @@ class PrimaryButtonComponent extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: borderColor
+          color: borderColor ?? Theme.of(context).colorScheme.outline
         ),
         borderRadius: BorderRadius.all(Radius.circular(radius)),
-        color: buttonColor
+        color: buttonColor ?? Theme.of(context).colorScheme.primary
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          splashColor: splashColor,
+          splashColor: splashColor ?? Theme.of(context).colorScheme.outline,
           borderRadius: BorderRadius.all(Radius.circular(radius)),
           onTap: onTap,
           child: Padding(
@@ -49,13 +49,13 @@ class PrimaryButtonComponent extends StatelessWidget {
               vertical: 12.0
             ),
             child: isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(color: AppColors.bluePrimary,),
+              ? Center(
+                  child: CircularProgressIndicator(color: Theme.of(context).colorScheme.primary),
                 )
               : Text(
                   label,
                   style: AppTextStyle.kBody1.get().copyWith(
-                    color: labelColor,
+                    color: labelColor ?? Theme.of(context).colorScheme.onSurface,
                     fontWeight: AppFontWeight.bold
                   ),
                   textAlign: TextAlign.center,

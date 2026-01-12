@@ -43,34 +43,53 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.bluePrimary),
         useMaterial3: true,
-      ),
-      // onGenerateRoute: AppRoutes.onGenerateRoute,
-      // initialRoute: AppPageRoutesName.todosList,
-      // localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      // locale: state,
-      home: HomeWidget(),
-    );
-  }
-}
+        colorScheme: const ColorScheme(
+          brightness: Brightness.light,
 
-class HomeWidget extends StatelessWidget {
-  const HomeWidget({super.key});
+          primary: AppColors.primary,
+          onPrimary: AppColors.onPrimary,
+          primaryContainer: AppColors.primaryContainer,
+          onPrimaryContainer: AppColors.onPrimaryContainer,
 
-  @override
-  Widget build(BuildContext context) {
+          secondary: AppColors.secondary,
+          onSecondary: AppColors.onSecondary,
 
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
+          surface: AppColors.surface,
+          onSurface: AppColors.onSurface,
 
-          }, 
-          child: Text("CLICK ME")
+          error: AppColors.error,
+          onError: AppColors.onError,
+
+          outline: AppColors.outline,
         ),
       ),
+
+      onGenerateRoute: AppRoutes.onGenerateRoute,
+      initialRoute: AppPageRoutesName.loginPage,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      // locale: state,
+      // home: HomeWidget(),
     );
   }
 }
+
+// class HomeWidget extends StatelessWidget {
+//   const HomeWidget({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+
+//     return Scaffold(
+//       body: Center(
+//         child: ElevatedButton(
+//           onPressed: () async {
+
+//           }, 
+//           child: Text("CLICK ME")
+//         ),
+//       ),
+//     );
+//   }
+// }

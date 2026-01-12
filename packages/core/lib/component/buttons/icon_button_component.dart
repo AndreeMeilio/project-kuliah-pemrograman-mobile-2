@@ -8,15 +8,15 @@ class IconButtonComponent extends StatelessWidget {
     super.key,
     required this.icon,
     required this.onPressed,
-    this.iconColor = AppColors.whitePrimary,
-    this.buttonColor = AppColors.bluePrimary,
-    this.borderColor = AppColors.whitePrimary,
+    this.iconColor,
+    this.buttonColor,
+    this.borderColor,
   });
 
   final IconData icon;
-  final Color iconColor;
-  final Color buttonColor;
-  final Color borderColor;
+  final Color? iconColor;
+  final Color? buttonColor;
+  final Color? borderColor;
   final void Function()? onPressed;
 
   @override
@@ -24,13 +24,13 @@ class IconButtonComponent extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
-          color: borderColor
+          color: Theme.of(context).colorScheme.outline
         ),
         borderRadius: const BorderRadius.all(Radius.circular(100)),
-        color: buttonColor
+        color: buttonColor ?? Theme.of(context).colorScheme.primary
       ),
       child: IconButton(
-        icon: Icon(icon, color: iconColor),
+        icon: Icon(icon, color: iconColor ?? Theme.of(context).colorScheme.onSurface),
         onPressed: onPressed
       ),
     );

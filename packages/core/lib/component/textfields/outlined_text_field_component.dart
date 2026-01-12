@@ -12,7 +12,10 @@ class OutlinedTextFieldComponent extends StatelessWidget {
     required this.label,
     required this.controller,
     this.maxLines = 1,
-    this.validator
+    this.validator,
+    this.isPassword = false,
+    this.hint
+
   });
 
   const OutlinedTextFieldComponent.textArea({
@@ -20,13 +23,17 @@ class OutlinedTextFieldComponent extends StatelessWidget {
     required this.label,
     required this.controller,
     required this.maxLines,
-    this.validator
+    this.validator,
+    this.isPassword = false,
+    this.hint
   });
 
   final String label;
   final TextEditingController controller;
   final int maxLines;
   final String? Function(String?)? validator;
+  final bool? isPassword;
+  final String? hint;
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +54,20 @@ class OutlinedTextFieldComponent extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             maxLines: maxLines,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(AppNumbers.defaultRadius)),
+              ),
+              hint: Text(
+                hint ?? "",
+                style: AppTextStyle.kBody1.get().copyWith(
+                  color: Colors.black.withAlpha(100)
+                )
               ),
             ),
             style: AppTextStyle.kBody1.get(),
             validator: validator,
+            obscureText: isPassword ?? false,
           ),
         ),
       ],

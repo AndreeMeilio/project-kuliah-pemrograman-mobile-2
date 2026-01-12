@@ -36,6 +36,7 @@ export 'utils/routes.dart';
 export 'utils/sizes.dart';
 export 'utils/text_styles.dart';
 export 'utils/generic_model_or_entity_response.dart';
+export 'utils/core_assets.dart';
 
 export 'domain/product_repository.dart';
 
