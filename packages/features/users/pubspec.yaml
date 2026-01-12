@@ -13,7 +13,8 @@ dependencies:
   flutter:
     sdk: flutter
   core:
-    path: ../../features/core
+    path: ../core
+  get_it: ^9.2.0
 
 dev_dependencies:
   flutter_test:

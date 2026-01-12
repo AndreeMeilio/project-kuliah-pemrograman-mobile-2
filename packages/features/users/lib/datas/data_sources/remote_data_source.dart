@@ -6,8 +6,8 @@ abstract class UserRemoteDataSource{
   Future<ApiHelperResponse> getAllUsers({int? limit, String? sort});
   Future<ApiHelperResponse> getSingleUser({required int id});
   Future<ApiHelperResponse> createUser({required UserModel data});
-  Future<ApiHelperResponse> updateProduct({required UserModel data, required int id});
-  Future<ApiHelperResponse> deleteProduct({required int id});
+  Future<ApiHelperResponse> updateUser({required UserModel data, required int id});
+  Future<ApiHelperResponse> deleteUser({required int id});
 }
 
 class UserRemoteDataSourceImpl extends UserRemoteDataSource{
@@ -29,7 +29,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource{
   }
   
   @override
-  Future<ApiHelperResponse<dynamic>> deleteProduct({required int id}) async{
+  Future<ApiHelperResponse<dynamic>> deleteUser({required int id}) async{
     final response = await _api(
       path: ApiEndpoint.userWithId(id: id.toString()), 
       method: ApiHelperMethod.delete
@@ -72,7 +72,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource{
   }
   
   @override
-  Future<ApiHelperResponse<dynamic>> updateProduct({required UserModel data, required int id}) async{
+  Future<ApiHelperResponse<dynamic>> updateUser({required UserModel data, required int id}) async{
     final response = await _api(
       path: ApiEndpoint.userWithId(id: id.toString()),
       method: ApiHelperMethod.put,
