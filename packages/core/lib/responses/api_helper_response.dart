@@ -17,10 +17,10 @@ class ApiHelperResponse<T>{
 
   Map<String, Object?> toJson(){
     return {
-      "status": this.status,
-      "message": this.message,
-      "response": this.response as T,
-      "data": this.data
+      "status": status,
+      "message": message,
+      "response": response as T,
+      "data": data
     };
   }
 }

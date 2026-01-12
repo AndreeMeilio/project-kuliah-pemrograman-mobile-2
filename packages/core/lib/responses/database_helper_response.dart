@@ -14,9 +14,9 @@ class DatabaseHelperResponse<T>{
 
   Map<String, Object?> toJson(){
     return {
-      "status": this.status,
-      "message": this.message,
-      "data": this.data as T
+      "status": status,
+      "message": message,
+      "data": data as T
     };
   }
 }

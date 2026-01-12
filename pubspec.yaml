@@ -36,18 +36,24 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   cupertino_icons: ^1.0.8
-
-  countries:
-    path: packages/features/countries
-  todos:
-    path: packages/features/todos
+  
   core:
     path: packages/core
+  products:
+    path: packages/features/products
+  carts:
+    path: packages/features/carts
+  users:
+    path: packages/features/users
+  auth:
+    path: packages/features/auth
 
 workspace:
   - packages/core
-  - packages/features/countries
-  - packages/features/todos
+  - packages/features/products
+  - packages/features/carts
+  - packages/features/auth
+  - packages/features/users
 dev_dependencies:
   flutter_test:
     sdk: flutter
