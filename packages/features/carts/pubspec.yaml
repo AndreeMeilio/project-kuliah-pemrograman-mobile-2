@@ -1,40 +1,20 @@
-name: core
+name: carts
 description: "A new Flutter package project."
 version: 0.0.1
-resolution: workspace
 # homepage:
-publish_to: none
+resolution: workspace
+
 
 environment:
-  sdk: ">=3.10.7 <4.0.0"
+  sdk: ^3.10.7
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-
-  dio: ^5.9.0
-  flutter_bloc: ^9.1.1
-  google_fonts: ^7.0.0
-  shared_preferences: ^2.3.2
+  core:
+    path: ../../core
   get_it: ^9.2.0
-  sqflite: ^2.3.3+1
-  page_transition: ^2.1.0
-  top_snackbar_flutter: ^3.1.0
-  path: ^1.9.0
-  intl: ^0.20.2
-  bloc: ^9.2.0
-  logger: ^2.4.0
-  pretty_dio_logger: ^1.4.0
-
-  products:
-    path: ../features/products
-  carts:
-    path: ../features/carts
-  users:
-    path: ../features/users
 
 dev_dependencies:
   flutter_test:
@@ -46,9 +26,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-  generate: true
   uses-material-design: true
-
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

@@ -88,7 +88,7 @@ class ApiHelper {
     } on DioException catch (e){
       return ApiHelperResponse(
         status: ResponseCodeEnum.error,
-        message: "Terjadi kesahalan ketika memuat data",
+        message: e.response?.data["message"] ?? "There is a mistake, please try again",
         response: e.response,
         data: data ?? []
       );

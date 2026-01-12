@@ -4,4 +4,8 @@ class AppDateFormat{
   static dd4m4y(DateTime time){
     return DateFormat("dd MMMM yyyy").format(time);
   }
+
+  static yyyymmdd(DateTime time){
+    return DateFormat("yyyy-MM-dd").format(time);
+  }
 }
