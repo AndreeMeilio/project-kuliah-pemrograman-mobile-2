@@ -35,6 +35,8 @@ dependencies:
     path: ../features/carts
   users:
     path: ../features/users
+  auth:
+    path: ../features/auth
 
 dev_dependencies:
   flutter_test:

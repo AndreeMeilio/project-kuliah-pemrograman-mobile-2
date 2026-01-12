@@ -17,7 +17,7 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   Future<GenericModelOrEntityResponse<UserModel>> createUser({required User data}) async{
-    final dataUserRequest = UserModel(
+    var dataUserRequest = UserModel(
       name: UserNameModel(
         firstname: data.name?.firstname,
         lastname: data.name?.lastname
@@ -39,6 +39,12 @@ class UserRepositoryImpl extends UserRepository {
       v: 1
     );
     final dataSource = await _remoteDataSource.createUser(data: dataUserRequest);
+
+    if (dataSource.response?.data case Map<String, dynamic> dataResponse when dataSource.status == ResponseCodeEnum.success){
+      dataUserRequest.id = dataResponse["id"];
+    } else {
+      dataUserRequest.id = 0;
+    }
 
     return GenericModelOrEntityResponse<UserModel>(
       status: dataSource.status!, 
