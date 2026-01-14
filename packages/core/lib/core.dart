@@ -5,6 +5,7 @@ export 'component/buttons/icon_button_component.dart';
 export 'component/buttons/primary_button_component.dart';
 export 'component/textfields/outlined_password_component.dart';
 export 'component/textfields/outlined_text_field_component.dart';
+export 'component/miscellaneous/active_check_component.dart';
 
 export 'constant/api.dart';
 export 'constant/colors.dart';

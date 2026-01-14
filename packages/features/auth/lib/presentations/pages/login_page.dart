@@ -116,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16.0,),
+                const SizedBox(height: 8.0,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: RichText(
@@ -131,7 +131,7 @@ class _LoginPageState extends State<LoginPage> {
                           style: AppTextStyle.kBody1.get().copyWith(color: Theme.of(context).colorScheme.primary),
                           recognizer: TapGestureRecognizer()
                             ..onTap = (){
-                              print("Register Click");
+                              Navigator.pushNamed(context, AppPageRoutesName.registerPage);
                             }
                         )
                       ]
