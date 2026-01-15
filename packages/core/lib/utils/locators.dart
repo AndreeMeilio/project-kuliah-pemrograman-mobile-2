@@ -1,6 +1,7 @@
 
 import 'package:auth/auth.dart';
 import 'package:carts/carts.dart';
+import 'package:core/cubit/loading_cubit.dart';
 import 'package:core/database/database_config.dart';
 import 'package:core/database/database_helper.dart';
 import 'package:core/network/api_config.dart';
@@ -19,6 +20,8 @@ void setupLocators() async{
   // Remote Api
   sl.registerLazySingleton<ApiConfig>(() => ApiConfig(), instanceName: "apiConfig");
   sl.registerLazySingleton<ApiHelper>(() => ApiHelper(apiConfig: sl(instanceName: "apiConfig")), instanceName: "apiHelper");
+
+  sl.registerLazySingleton<LoadingCubit>(() => LoadingCubit(), instanceName: "loadingCubit");
 
   setupProductLocator(sl);
   setupCartLocator(sl);

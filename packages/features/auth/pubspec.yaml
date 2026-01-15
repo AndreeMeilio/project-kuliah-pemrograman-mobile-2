@@ -12,12 +12,14 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  core:
-    path: ../../core
   get_it: ^9.2.0
   bloc: ^9.2.0
   flutter_bloc: ^9.1.1
 
+  core:
+    path: ../../core
+  users:
+    path: ../../users
 
 dev_dependencies:
   flutter_test:

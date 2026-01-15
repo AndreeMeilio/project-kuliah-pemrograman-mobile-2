@@ -44,106 +44,120 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: .stretch,
-              children: [
-                Image.asset(
-                  CoreAssets.logo,
-                  package: 'core',
-                  fit: BoxFit.cover,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.defaultPadding),
-                  child: Text(
-                    "Login",
-                    style: AppTextStyle.kHeading1.get(),
+      body: GenericPage(
+        child: SafeArea(
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: .stretch,
+                children: [
+                  Image.asset(
+                    CoreAssets.logo,
+                    package: 'core',
+                    fit: BoxFit.cover,
                   ),
-                ),
-                const SizedBox(height: 16.0,),
-                OutlinedTextFieldComponent(
-                  label: "Username", 
-                  controller: _usernameController,
-                  hint: "Insert your username here",
-                  validator: (value){
-                    if (value == null || value == ""){
-                      return "Please insert your username!";
-                    }
-          
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 8.0,),
-                OutlinedTextFieldComponent(
-                  label: "Password", 
-                  controller: _passwordController,
-                  isPassword: true,
-                  hint: "Insert your password here",
-                  validator: (value){
-                    if (value == null || value == ""){
-                      return "Please insert your password!";
-                    }
-          
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 16.0,),
-                BlocListener<LoginCubit, LoginGenericState>(
-                  listener: (context, state) {
-                    if (state.state is LoginLoadingState){
-                      print("loading");
-                    } else if (state.state is LoginSuccessState){
-                      print(state.data?.token);
-                    } else if (state.state is LoginFailedState){
-                      print(state.error);
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: PrimaryButtonComponent(
-                      onTap: () async{
-                        if (_formKey.currentState?.validate() ?? false){
-                          await _loginCubit.login(
-                            username: _usernameController.text, 
-                            password: _passwordController.text
-                          );
-                        }
-                      }, 
-                      label: "LOGIN"
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.defaultPadding),
+                    child: Text(
+                      "Login",
+                      style: AppTextStyle.kHeading1.get(),
                     ),
                   ),
-                ),
-                const SizedBox(height: 8.0,),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: RichText(
-                    text: TextSpan(
-                      text: "You don't have an account? ",
-                      style: AppTextStyle.kBody1.get().copyWith(
-                        color: Theme.of(context).colorScheme.onSurface
+                  const SizedBox(height: 16.0,),
+                  OutlinedTextFieldComponent(
+                    label: "Username", 
+                    controller: _usernameController,
+                    hint: "Insert your username here",
+                    validator: (value){
+                      if (value == null || value == ""){
+                        return "Please insert your username!";
+                      }
+            
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 8.0,),
+                  OutlinedTextFieldComponent(
+                    label: "Password", 
+                    controller: _passwordController,
+                    isPassword: true,
+                    hint: "Insert your password here",
+                    validator: (value){
+                      if (value == null || value == ""){
+                        return "Please insert your password!";
+                      }
+            
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16.0,),
+                  BlocListener<LoginCubit, LoginGenericState>(
+                    listener: (context, state) {
+                      if (state.state is LoginLoadingState){
+                        loadingComponent(context, show: true);
+                      } else if (state.state is LoginSuccessState){
+                        loadingComponent(context, show: false);
+                        showMessageSnackbar(
+                          context: context,
+                          message: "Authentication success",
+                          type: MessageSnackbarType.success
+                        );
+
+                        Navigator.pushReplacementNamed(context, AppPageRoutesName.productListPage);
+                      } else if (state.state is LoginFailedState){
+                        loadingComponent(context, show: false);
+                        showMessageSnackbar(
+                          context: context,
+                          message: state.error ?? "",
+                          type: MessageSnackbarType.error
+                        );
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: PrimaryButtonComponent(
+                        onTap: () async{
+                          if (_formKey.currentState?.validate() ?? false){
+                            await _loginCubit.login(
+                              username: _usernameController.text, 
+                              password: _passwordController.text
+                            );
+                          }
+                        }, 
+                        label: "LOGIN"
                       ),
-                      children: [
-                        TextSpan(
-                          text: "Register Here!",
-                          style: AppTextStyle.kBody1.get().copyWith(color: Theme.of(context).colorScheme.primary),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = (){
-                              Navigator.pushNamed(context, AppPageRoutesName.registerPage);
-                            }
-                        )
-                      ]
                     ),
-                  )
-                ),
-                const SizedBox(height: 16.0,)
-              ],
+                  ),
+                  const SizedBox(height: 8.0,),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: RichText(
+                      text: TextSpan(
+                        text: "You don't have an account? ",
+                        style: AppTextStyle.kBody1.get().copyWith(
+                          color: Theme.of(context).colorScheme.onSurface
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "Register Here!",
+                            style: AppTextStyle.kBody1.get().copyWith(color: Theme.of(context).colorScheme.primary),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = (){
+                                Navigator.pushNamed(context, AppPageRoutesName.registerPage);
+                              }
+                          )
+                        ]
+                      ),
+                    )
+                  ),
+                  const SizedBox(height: 16.0,)
+                ],
+              ),
             ),
-          ),
-        )
-      ),
+          )
+        ),
+      )
     );
   }
 }

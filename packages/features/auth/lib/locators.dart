@@ -2,6 +2,7 @@
 import 'package:auth/datas/data_sources/remote_data_source.dart';
 import 'package:auth/datas/repositories/auth_repository.dart';
 import 'package:auth/presentations/cubits/login_cubit.dart';
+import 'package:auth/presentations/cubits/register_cubit.dart';
 import 'package:core/core.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,4 +18,6 @@ void setupAuthLocator(GetIt sl){
   );
 
   sl.registerFactory<LoginCubit>(() => LoginCubit(sl(instanceName: "authRepository")), instanceName: "loginCubit");
+  sl.registerFactory<RegisterPasswordValidationCubit>(() => RegisterPasswordValidationCubit(), instanceName: "registerPasswordValidationCubit");
+  sl.registerFactory<RegisterCubit>(() => RegisterCubit(sl(instanceName: "userRepository")), instanceName: "registerCubit");
 }

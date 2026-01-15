@@ -47,6 +47,7 @@ dependencies:
     path: packages/features/users
   auth:
     path: packages/features/auth
+  flutter_bloc: ^9.1.1
 
 workspace:
   - packages/core

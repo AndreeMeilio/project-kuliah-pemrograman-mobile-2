@@ -28,4 +28,8 @@ class AppColors {
   // Error
   static const error = Color(0xFFB3261E);
   static const onError = Color(0xFFFFFFFF);
+
+  static const success = Color(0xFF2E7D32);
+  static const onSuccess = Color(0xFFFFFFFF);
+
 }
