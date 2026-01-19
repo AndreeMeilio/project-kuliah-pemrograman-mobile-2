@@ -9,9 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 typedef LoginGenericState = GenericState<Auth, LoginState>;
 
 class LoginCubit extends Cubit<LoginGenericState>{
-  final AuthRepository _repository;
-
-  LoginCubit(this._repository): super(LoginGenericState(state: LoginInitState()));
+  LoginCubit(): super(LoginGenericState(state: LoginInitState()));
 
   Future<void> login({
     required String username,
@@ -19,7 +17,7 @@ class LoginCubit extends Cubit<LoginGenericState>{
   }) async{
     emit(LoginGenericState(state: LoginLoadingState()));
 
-    final loginUseCase = Login(_repository);
+    final loginUseCase = sl<Login>(instanceName: "loginUseCase");
     final loginResponse = await loginUseCase(dataLogin: Auth(
       username: username,
       password: password

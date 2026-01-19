@@ -1,5 +1,3 @@
-import 'package:auth/auth.dart';
-import 'package:auth/domains/use_cases/register_user.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,22 +13,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => sl.get<LoadingCubit>(instanceName: "loadingCubit"),
-        ),
-        BlocProvider(
-          create: (context) => sl.get<LoginCubit>(instanceName: "loginCubit"),
-          lazy: true,
-        ),
-        BlocProvider(
-          create: (context) => sl.get<RegisterPasswordValidationCubit>(instanceName: "registerPasswordValidationCubit"),
-        ),
-        BlocProvider(
-          create: (context) => sl.get<RegisterCubit>(instanceName: "registerCubit"),
-        )
-      ], 
+    return BlocProvider(
+      create: (context) => sl.get<LoadingCubit>(instanceName: "loadingCubit"),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(

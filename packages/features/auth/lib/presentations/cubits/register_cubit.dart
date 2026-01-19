@@ -5,137 +5,11 @@ import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:users/users.dart';
 
-typedef RegisterPasswordValidationType = ({
-  bool hasMinLength,
-  bool hasUppercase,
-  bool hasLowercase,
-  bool hasNumeric,
-  bool hasSymbol
-});
-
-class RegisterPasswordValidationCubit extends Cubit<RegisterPasswordValidationType>{
-  RegisterPasswordValidationCubit(): super((
-    hasMinLength: false,
-    hasUppercase: false,
-    hasLowercase: false,
-    hasNumeric: false,
-    hasSymbol: false
-  ));
-
-  void updateStateHasMinLength(bool value){
-    
-    final RegisterPasswordValidationType(
-      :hasMinLength,
-      :hasUppercase,
-      :hasLowercase,
-      :hasNumeric,
-      :hasSymbol
-    ) = state;
-
-    emit((
-      hasMinLength: value,
-      hasUppercase: hasUppercase,
-      hasLowercase: hasLowercase,
-      hasNumeric: hasNumeric,
-      hasSymbol: hasSymbol
-    ));
-  }
-
-  void updateStateHasUppercase(bool value){
-    
-    final RegisterPasswordValidationType(
-      :hasMinLength,
-      :hasUppercase,
-      :hasLowercase,
-      :hasNumeric,
-      :hasSymbol
-    ) = state;
-
-    emit((
-      hasMinLength: hasMinLength,
-      hasUppercase: value,
-      hasLowercase: hasLowercase,
-      hasNumeric: hasNumeric,
-      hasSymbol: hasSymbol
-    ));
-  }
-
-  void updateStateHasLowercase(bool value){
-    
-    final RegisterPasswordValidationType(
-      :hasMinLength,
-      :hasUppercase,
-      :hasLowercase,
-      :hasNumeric,
-      :hasSymbol
-    ) = state;
-
-    emit((
-      hasMinLength: hasMinLength,
-      hasUppercase: hasUppercase,
-      hasLowercase: value,
-      hasNumeric: hasNumeric,
-      hasSymbol: hasSymbol
-    ));
-  }
-
-  void updateStateHasNumeric(bool value){
-    
-    final RegisterPasswordValidationType(
-      :hasMinLength,
-      :hasUppercase,
-      :hasLowercase,
-      :hasNumeric,
-      :hasSymbol
-    ) = state;
-
-    emit((
-      hasMinLength: hasMinLength,
-      hasUppercase: hasUppercase,
-      hasLowercase: hasLowercase,
-      hasNumeric: value,
-      hasSymbol: hasSymbol
-    ));
-  }  
-
-  void updateStateHasSymbol(bool value){
-    
-    final RegisterPasswordValidationType(
-      :hasMinLength,
-      :hasUppercase,
-      :hasLowercase,
-      :hasNumeric,
-      :hasSymbol
-    ) = state;
-
-    emit((
-      hasMinLength: hasMinLength,
-      hasUppercase: hasUppercase,
-      hasLowercase: hasLowercase,
-      hasNumeric: hasNumeric,
-      hasSymbol: value
-    ));
-  }
-}
+part 'register_password_validation_cubit.dart';
 
 typedef RegisterStateType = GenericState<User, RegisterState>;
 class RegisterCubit extends Cubit<RegisterStateType>{
-  final UserRepository _repository;
-
-  RegisterCubit(this._repository): super(RegisterStateType(state: RegisterInitState()));
-
-  // _usernameController = TextEditingController();
-  //   _emailController = TextEditingController();
-  //   _passwordController = TextEditingController();
-  //   _firstNameController = TextEditingController();
-  //   _lastNameControler = TextEditingController();
-  //   _phoneController = TextEditingController();
-  //   _cityController = TextEditingController();
-  //   _latController = TextEditingController();
-  //   _longitudeController = TextEditingController();
-  //   _streetController = TextEditingController();
-  //   _numberController = TextEditingController();
-  //   _zipController = TextEditingController();
+  RegisterCubit(): super(RegisterStateType(state: RegisterInitState()));
 
   Future<void> registerUser({
     required String username,
@@ -152,6 +26,14 @@ class RegisterCubit extends Cubit<RegisterStateType>{
     String? zip
   }) async{
     emit(RegisterStateType(state: RegisterLoadingState()));
+
+    late int numberForRequest;
+    if (number case String numberValid when number != ""){
+      numberForRequest = int.parse(numberValid);
+    } else {
+      numberForRequest = 0;
+    }
+
     final dataRequest = User(
       username: username,
       name: UserName(
@@ -167,12 +49,12 @@ class RegisterCubit extends Cubit<RegisterStateType>{
           long: longitude,
         ),
         street: street,
-        number: int.parse(number ?? "0"),
+        number: numberForRequest,
         zipcode: zip,
       )
     );
 
-    final registerUser = Register(_repository);
+    final registerUser = sl<Register>(instanceName: "registerUseCase");
     final registerResponse = await registerUser(user: dataRequest);
 
     if (registerResponse.status == ResponseCodeEnum.success){

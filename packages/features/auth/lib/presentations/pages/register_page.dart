@@ -70,6 +70,8 @@ class _RegisterPageState extends State<RegisterPage> {
     _streetController.dispose();
     _numberController.dispose();
     _zipController.dispose();
+
+    _registerPasswordValidationCubit.resetPasswordValidation();
   }
 
   @override
