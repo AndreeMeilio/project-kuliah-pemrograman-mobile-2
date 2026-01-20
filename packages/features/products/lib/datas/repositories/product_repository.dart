@@ -96,7 +96,8 @@ class ProductRepositoryImpl extends ProductRepository {
 
   @override
   Future<GenericModelOrEntityResponse<List<ProductModel>>> getProductByCategory({required String category, int? limit, String? sort}) async{
-    final dataSource = await _remoteDataSource.getAllProduct(
+    final dataSource = await _remoteDataSource.getProductByCategory(
+      category: category,
       limit: limit,
       sort: sort
     );

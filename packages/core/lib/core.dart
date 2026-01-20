@@ -9,6 +9,7 @@ export 'component/miscellaneous/active_check_component.dart';
 export 'component/miscellaneous/loading_component.dart';
 export 'component/miscellaneous/generic_page.dart';
 export 'component/miscellaneous/message_snackbar_component.dart';
+export 'component/textfields/custom_dropdown_button.dart';
 
 export 'constant/api.dart';
 export 'constant/colors.dart';

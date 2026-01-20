@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:products/presentations/cubits/product_filter_cubit.dart';
 import 'package:products/presentations/cubits/product_list_cubit.dart';
 import 'package:products/presentations/states/product_category_state.dart';
 import 'package:products/presentations/states/product_list_state.dart';
@@ -16,10 +17,7 @@ class _ProductListPageState extends State<ProductListPage> {
 
   late ProductListCubit _productListCubit;
   late ProductCategoryCubit _productCategoryCubit;
-
-  String? _category;
-  String? _limit;
-  String? _sort;
+  late ProductFilterCubit _productFilterCubit;
 
   @override
   void initState(){
@@ -27,6 +25,8 @@ class _ProductListPageState extends State<ProductListPage> {
 
     _productListCubit = BlocProvider.of<ProductListCubit>(context, listen: false);
     _productCategoryCubit = BlocProvider.of<ProductCategoryCubit>(context, listen: false);
+    _productFilterCubit = BlocProvider.of<ProductFilterCubit>(context, listen: false);
+    _productFilterCubit.init();
 
     WidgetsBinding.instance.addPostFrameCallback((_){
       _productListCubit.getAllProducts();
@@ -53,37 +53,152 @@ class _ProductListPageState extends State<ProductListPage> {
                   slivers: [
                     SliverAppBar(
                       backgroundColor: Theme.of(context).colorScheme.surface,
-                      expandedHeight: 0.125.getHeight(context),
                       floating: true,
                       snap: true,
                       pinned: true,
-                      title: Row(
-                        children: [
-                          Text(
-                            "List Product",
-                            style: AppTextStyle.kHeading2.get(),
-                          )
-                        ],
+                      title: Text(
+                        "List Product",
+                        style: AppTextStyle.kHeading1.get(),
                       ),
-                      bottom: AppBar(
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        title: Text(
-                          "List Product",
-                          style: AppTextStyle.kHeading2.get(),
+                      bottom: PreferredSize(
+                        preferredSize: Size.fromHeight(0.1.getHeight(context)), 
+                        child: Container(
+                          height: 0.1.getHeight(context),
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              spacing: 4.0,
+                              children: [
+                                BlocBuilder<ProductCategoryCubit, ProductCategoryStateType>(
+                                  builder: (context, state) {
+                                    List<DropdownMenuItem<String>> itemCategory = [
+                                      DropdownMenuItem(
+                                        value: "select_category",
+                                        child: Text(
+                                          "Select Category",
+                                          style: AppTextStyle.kBody1.get(),
+                                        ),
+                                      ),
+                                    ];
+
+                                    if (state.state is ProductCategoryLoadedState){
+                                      itemCategory.addAll(
+                                        (state.data ?? []).map<DropdownMenuItem<String>>((value){
+                                          return DropdownMenuItem(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: AppTextStyle.kBody1.get(),
+                                            ),
+                                          );
+                                        }).toList()
+                                      );
+                                    }
+
+                                    return BlocBuilder<ProductFilterCubit, ProductFilterStateType>(
+                                      builder: (context, state){
+                                        return CustomDropdownButton<String>(
+                                          initialValue: state.category,
+                                          width: 0.5.getWidth(context), 
+                                          onChanged: (value) async{
+
+                                          }, 
+                                          items: itemCategory
+                                        );
+                                      },
+                                    );
+                                  },
+                                ),
+                                BlocBuilder<ProductFilterCubit, ProductFilterStateType>(
+                                  builder: (context, state){
+                                    return CustomDropdownButton<String>(
+                                      width: 0.3.getWidth(context),
+                                      initialValue: state.limit, 
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: "select_limit",
+                                          child: Text(
+                                            "Limit",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "all",
+                                          child: Text(
+                                            "ALL",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "5",
+                                          child: Text(
+                                            "5 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "10",
+                                          child: Text(
+                                            "10 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "20",
+                                          child: Text(
+                                            "20 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                      ], 
+                                      onChanged: (value){
+
+                                      }
+                                    );
+                                  }
+                                ),
+                                BlocBuilder<ProductFilterCubit, ProductFilterStateType>(
+                                  builder: (context, state){
+                                    return CustomDropdownButton<String>(
+                                      width: 0.25.getWidth(context),
+                                      initialValue: state.sort, 
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: "select_sort",
+                                          child: Text(
+                                            "Sort",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "asc",
+                                          child: Text(
+                                            "ASC",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "desc",
+                                          child: Text(
+                                            "DESC",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                      ], 
+                                      onChanged: (value){
+                                                              
+                                      }
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                          )
                         )
                       ),
                     ),
-                    SliverList.builder(
-                      itemCount: 1,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: Text(
-                            state.message ?? "",
-                            style: AppTextStyle.kBody1.get(),
-                          ),
-                        );
-                      },
-                    )
                   ],
                 );
               } else if (state.state is ProductListLoadedState){
@@ -109,164 +224,143 @@ class _ProductListPageState extends State<ProductListPage> {
                             child: Row(
                               spacing: 4.0,
                               children: [
-                                Container(
-                                  color: Theme.of(context).colorScheme.onPrimary,
-                                  width: 0.5.getWidth(context),
-                                  child: BlocBuilder<ProductCategoryCubit, ProductCategoryStateType>(
-                                    builder: (context, state) {
-                                      List<DropdownMenuItem<String>> itemCategory = [
+                                BlocBuilder<ProductCategoryCubit, ProductCategoryStateType>(
+                                  builder: (context, state) {
+                                    List<DropdownMenuItem<String>> itemCategory = [
+                                      DropdownMenuItem(
+                                        value: "select_category",
+                                        child: Text(
+                                          "Select Category",
+                                          style: AppTextStyle.kBody1.get(),
+                                        ),
+                                      ),
+                                    ];
+
+                                    if (state.state is ProductCategoryLoadedState){
+                                      itemCategory.addAll(
+                                        (state.data ?? []).map<DropdownMenuItem<String>>((value){
+                                          return DropdownMenuItem(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: AppTextStyle.kBody1.get(),
+                                            ),
+                                          );
+                                        }).toList()
+                                      );
+                                    }
+
+                                    return BlocBuilder<ProductFilterCubit, ProductFilterStateType>(
+                                      builder: (context, state){
+                                        return CustomDropdownButton(
+                                          initialValue: state.category,
+                                          width: 0.5.getWidth(context), 
+                                          onChanged: (value) async{
+                                            _productFilterCubit.updateFilterCategory(value.toString());
+                                            await _productListCubit.getAllProductFilter(
+                                              category: value,
+                                              sort: state.sort,
+                                              limit: state.limit
+                                            );
+                                          }, 
+                                          items: itemCategory
+                                        );
+                                      }
+                                    );
+                                  },
+                                ),
+                                BlocBuilder<ProductFilterCubit, ProductFilterStateType>(
+                                  builder: (context, state){
+                                    return CustomDropdownButton<String>(
+                                      width: 0.3.getWidth(context),
+                                      initialValue: state.limit, 
+                                      items: [
                                         DropdownMenuItem(
-                                          value: "select_category",
-                                          enabled: false,
+                                          value: "select_limit",
                                           child: Text(
-                                            "Select Category",
+                                            "Limit",
                                             style: AppTextStyle.kBody1.get(),
                                           ),
                                         ),
-                                      ];
-
-                                      if (state.state is ProductCategoryLoadedState){
-                                        itemCategory.addAll(
-                                          (state.data ?? []).map<DropdownMenuItem<String>>((value){
-                                            return DropdownMenuItem(
-                                              value: value,
-                                              child: Text(
-                                                value,
-                                                style: AppTextStyle.kBody1.get(),
-                                              ),
-                                            );
-                                          }).toList()
-                                        );
+                                        DropdownMenuItem(
+                                          value: "all",
+                                          child: Text(
+                                            "ALL",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "5",
+                                          child: Text(
+                                            "5 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "10",
+                                          child: Text(
+                                            "10 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "20",
+                                          child: Text(
+                                            "20 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                      ], 
+                                      onChanged: (value) async{
+                                        _productFilterCubit.updateFilterLimit(value.toString()); 
+                                        await _productListCubit.getAllProductFilter(
+                                          category: state.category,
+                                          sort: state.sort,
+                                          limit: value
+                                        );             
                                       }
-
-                                      return DropdownButtonFormField(
-                                        initialValue: "select_category",
-                                        decoration: InputDecoration(
-                                          contentPadding: const EdgeInsets.symmetric(
-                                            horizontal: 16.0, 
-                                            vertical: 8.0
+                                    );
+                                  },
+                                ),
+                                BlocBuilder<ProductFilterCubit, ProductFilterStateType>(
+                                  builder: (context, state){
+                                    return CustomDropdownButton<String>(
+                                      width: 0.25.getWidth(context),
+                                      initialValue: state.sort, 
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: "select_sort",
+                                          child: Text(
+                                            "Sort",
+                                            style: AppTextStyle.kBody1.get(),
                                           ),
-                                          border: OutlineInputBorder(),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "asc",
+                                          child: Text(
+                                            "ASC",
+                                            style: AppTextStyle.kBody1.get(),
                                           ),
-                                          focusColor: Theme.of(context).colorScheme.primary,
-                                          isDense: true
                                         ),
-                                        items: itemCategory,
-                                        onChanged: (value){
-                                                                
-                                        }
-                                      );
-                                    },
-                                  )
-                                ),
-                                Container(
-                                  color: Theme.of(context).colorScheme.onPrimary,
-                                  width: 0.3.getWidth(context),
-                                  child: DropdownButtonFormField(
-                                    initialValue: "select_limit",
-                                    decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 16.0, 
-                                        vertical: 8.0
-                                      ),
-                                      border: OutlineInputBorder(),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)
-                                      ),
-                                      focusColor: Theme.of(context).colorScheme.primary,
-                                      isDense: true
-                                    ),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: "select_limit",
-                                        enabled: false,
-                                        child: Text(
-                                          "Limit",
-                                          style: AppTextStyle.kBody1.get(),
+                                        DropdownMenuItem(
+                                          value: "desc",
+                                          child: Text(
+                                            "DESC",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
                                         ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "all",
-                                        child: Text(
-                                          "ALL",
-                                          style: AppTextStyle.kBody1.get(),
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "5",
-                                        child: Text(
-                                          "5 Data",
-                                          style: AppTextStyle.kBody1.get(),
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "10",
-                                        child: Text(
-                                          "10 Data",
-                                          style: AppTextStyle.kBody1.get(),
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "20",
-                                        child: Text(
-                                          "20 Data",
-                                          style: AppTextStyle.kBody1.get(),
-                                        ),
-                                      ),
-                                    ], 
-                                    onChanged: (value){
-                                                            
-                                    }
-                                  ),
-                                ),
-                                Container(
-                                  color: Theme.of(context).colorScheme.onPrimary,
-                                  width: 0.25.getWidth(context),
-                                  child: DropdownButtonFormField(
-                                    initialValue: "select_sort",
-                                    decoration: InputDecoration(
-                                      contentPadding: const EdgeInsets.symmetric(
-                                        horizontal: 16.0, 
-                                        vertical: 8.0
-                                      ),
-                                      border: OutlineInputBorder(),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(color: Theme.of(context).colorScheme.primary)
-                                      ),
-                                      focusColor: Theme.of(context).colorScheme.primary,
-                                      isDense: true
-                                    ),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: "select_sort",
-                                        enabled: false,
-                                        child: Text(
-                                          "Sort",
-                                          style: AppTextStyle.kBody1.get(),
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "asc",
-                                        child: Text(
-                                          "ASC",
-                                          style: AppTextStyle.kBody1.get(),
-                                        ),
-                                      ),
-                                      DropdownMenuItem(
-                                        value: "desc",
-                                        child: Text(
-                                          "DESC",
-                                          style: AppTextStyle.kBody1.get(),
-                                        ),
-                                      ),
-                                    ], 
-                                    onChanged: (value){
-                                                            
-                                    }
-                                  ),
-                                ),
+                                      ], 
+                                      onChanged: (value) async{
+                                        _productFilterCubit.updateFilterSort(value.toString());           
+                                        await _productListCubit.getAllProductFilter(
+                                          category: state.category,
+                                          sort: value,
+                                          limit: state.limit
+                                        );            
+                                      }
+                                    );
+                                  },
+                                )
                               ],
                             ),
                           )
@@ -347,43 +441,7 @@ class _ProductListPageState extends State<ProductListPage> {
                   ],
                 );
               } else {
-                return CustomScrollView(
-                  slivers: [
-                    SliverAppBar(
-                      backgroundColor: Theme.of(context).colorScheme.primary,
-                      expandedHeight: 0.125.getHeight(context),
-                      floating: true,
-                      snap: true,
-                      pinned: true,
-                      title: Row(
-                        children: [
-                          Text(
-                            "Product",
-                            style: AppTextStyle.kHeading2.get(),
-                          )
-                        ],
-                      ),
-                      bottom: AppBar(
-                        backgroundColor: Theme.of(context).colorScheme.surface,
-                        title: Text(
-                          "List Product",
-                          style: AppTextStyle.kHeading2.get(),
-                        )
-                      ),
-                    ),
-                    SliverList.builder(
-                      itemCount: 1,
-                      itemBuilder: (context, index) {
-                        return Center(
-                          child: Text(
-                            "There is no data available",
-                            style: AppTextStyle.kBody1.get(),
-                          ),
-                        );
-                      },
-                    )
-                  ],
-                );
+                return Container();
               }
             },
             listener: (context, state){

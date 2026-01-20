@@ -1,0 +1,6 @@
+sealed class ProfileChangePasswordState {}
+class ProfileChangePasswordInitialState extends ProfileChangePasswordState{}
+class ProfileChangePasswordLoadingState extends ProfileChangePasswordState{}
+class ProfileChangePasswordSuccessState extends ProfileChangePasswordState{}
+class ProfileChangePasswordFailedState extends ProfileChangePasswordState{}
+

@@ -4,7 +4,9 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:products/presentations/cubits/product_filter_cubit.dart';
 import 'package:products/products.dart';
+import 'package:users/users.dart';
 
 class AppRoutes{
   static Route<dynamic>? onGenerateRoute(RouteSettings settings){
@@ -49,6 +51,20 @@ class AppRoutes{
                 create: (context) {
                   return sl.get<HomeCubit>(instanceName: "homeCubit");
                 },
+              ),
+              BlocProvider(
+                create: (context) {
+                  return sl.get<ProfileCubit>(instanceName: "profileCubit");
+                },
+              ),
+              BlocProvider(
+                create: (context) => sl.get<ProfileChangePasswordValidationCubit>(instanceName: "profileChangePasswordValidationCubit"),
+              ),
+              BlocProvider(
+                create: (context) => sl.get<ProfileChangePasswordCubit>(instanceName: "profileChangePasswordCubit"),
+              ),
+              BlocProvider(
+                create: (context) => sl.get<ProductFilterCubit>(instanceName: "productFilterCubit"),
               )
             ], 
             child: HomePage()
