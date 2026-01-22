@@ -25,4 +25,5 @@ void setupAuthLocator(GetIt sl){
   sl.registerFactory<LoginCubit>(() => LoginCubit(), instanceName: "loginCubit");
   sl.registerFactory<RegisterPasswordValidationCubit>(() => RegisterPasswordValidationCubit(), instanceName: "registerPasswordValidationCubit");
   sl.registerFactory<RegisterCubit>(() => RegisterCubit(), instanceName: "registerCubit");
+  sl.registerFactory<LoginRememberMeCheckBoxCubit>(() => LoginRememberMeCheckBoxCubit(), instanceName: "loginRememberMeCheckBoxCubit");
 }

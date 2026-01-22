@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   late GlobalKey<FormState> _formKey;
 
   late LoginCubit _loginCubit;
+  late LoginRememberMeCheckBoxCubit _loginRememberMeCheckBoxCubit;
 
   @override
   void initState(){
@@ -28,6 +29,17 @@ class _LoginPageState extends State<LoginPage> {
     _formKey = GlobalKey<FormState>();
 
     _loginCubit = BlocProvider.of<LoginCubit>(context, listen: false);
+    _loginRememberMeCheckBoxCubit = BlocProvider.of<LoginRememberMeCheckBoxCubit>(context, listen: false);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async{ 
+      final token = await CorePreferences.get<String>(PreferencesKey.tokenLogin);
+
+      if (!mounted) return;
+
+      if (token != null){
+        Navigator.pushReplacementNamed(context, AppPageRoutesName.productListPage);
+      }
+    });
   }
 
   @override
@@ -91,6 +103,26 @@ class _LoginPageState extends State<LoginPage> {
                       return null;
                     },
                   ),
+                  const SizedBox(height: 8.0,),
+                  BlocBuilder<LoginRememberMeCheckBoxCubit, bool>(
+                    builder: (context, state){
+                      return Row(
+                        children: [
+                          Checkbox(
+                            activeColor: Theme.of(context).colorScheme.primary,
+                            value: state, 
+                            onChanged: (value){
+                              _loginRememberMeCheckBoxCubit.changeRememberMeValue(value ?? false);
+                            }
+                          ),
+                          Text(
+                            "Remember me!",
+                            style: AppTextStyle.kBody1.get(),
+                          )
+                        ],
+                      );
+                    }
+                  ),
                   const SizedBox(height: 16.0,),
                   BlocListener<LoginCubit, LoginGenericState>(
                     listener: (context, state) {
@@ -116,17 +148,22 @@ class _LoginPageState extends State<LoginPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: PrimaryButtonComponent(
-                        onTap: () async{
-                          if (_formKey.currentState?.validate() ?? false){
-                            await _loginCubit.login(
-                              username: _usernameController.text, 
-                              password: _passwordController.text
-                            );
-                          }
-                        }, 
-                        label: "LOGIN"
-                      ),
+                      child: BlocBuilder<LoginRememberMeCheckBoxCubit, bool>(
+                        builder: (context, state){
+                          return PrimaryButtonComponent(
+                            onTap: () async{
+                              if (_formKey.currentState?.validate() ?? false){
+                                await _loginCubit.login(
+                                  username: _usernameController.text, 
+                                  password: _passwordController.text,
+                                  rememberMe: state
+                                );
+                              }
+                            }, 
+                            label: "LOGIN"
+                          );
+                        },
+                      )
                     ),
                   ),
                   const SizedBox(height: 8.0,),

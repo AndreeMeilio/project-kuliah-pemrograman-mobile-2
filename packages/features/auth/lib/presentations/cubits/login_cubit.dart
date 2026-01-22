@@ -6,6 +6,8 @@ import 'package:auth/presentations/states/login_state.dart';
 import 'package:core/core.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+part 'login_form_value_cubit.dart';
+
 typedef LoginGenericState = GenericState<Auth, LoginState>;
 
 class LoginCubit extends Cubit<LoginGenericState>{
@@ -13,7 +15,8 @@ class LoginCubit extends Cubit<LoginGenericState>{
 
   Future<void> login({
     required String username,
-    required String password
+    required String password,
+    bool? rememberMe
   }) async{
     emit(LoginGenericState(state: LoginLoadingState()));
 
@@ -24,6 +27,13 @@ class LoginCubit extends Cubit<LoginGenericState>{
     ));
 
     if (loginResponse.status == ResponseCodeEnum.success){
+      if (rememberMe ?? false){
+        await CorePreferences.set<String>(
+          PreferencesKey.tokenLogin,
+          loginResponse.data.token ?? ""
+        );
+      }
+    
       emit(LoginGenericState(
         status: loginResponse.status,
         data: loginResponse.data,

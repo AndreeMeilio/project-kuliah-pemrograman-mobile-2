@@ -16,10 +16,17 @@ class AppRoutes{
       case AppPageRoutesName.loginPage:
         return PageTransition(
           type: PageTransitionType.fade,
-          child: BlocProvider(
-            create: (context) => sl.get<LoginCubit>(instanceName: "loginCubit"), lazy: true,
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => sl.get<LoginCubit>(instanceName: "loginCubit"), lazy: true,
+              ),
+              BlocProvider(
+                create: (context) => sl.get<LoginRememberMeCheckBoxCubit>(instanceName: "loginRememberMeCheckBoxCubit"), lazy: true,
+              ),
+            ], 
             child: LoginPage()
-          ),
+          ) 
         );
       case AppPageRoutesName.registerPage:
         return PageTransition(

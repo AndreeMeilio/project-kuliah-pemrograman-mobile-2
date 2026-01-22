@@ -64,12 +64,34 @@ class _ProfilePageState extends State<ProfilePage> {
                     slivers: [
                       SliverList.list(
                         children: [
-                          Container(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(
-                              "Profile",
-                              style: AppTextStyle.kHeading1.get(),
-                            ),
+                          Row(
+                            mainAxisAlignment: .spaceBetween,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  "Profile",
+                                  style: AppTextStyle.kHeading1.get(),
+                                ),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                                child: PrimaryButtonComponent(
+                                  buttonColor: Theme.of(context).colorScheme.error,
+                                  labelColor: Theme.of(context).colorScheme.onPrimary,
+                                  onTap: () async{
+                                    await CorePreferences.remove(
+                                      PreferencesKey.tokenLogin
+                                    );
+
+                                    if (!mounted) return;
+
+                                    Navigator.pushReplacementNamed(context, AppPageRoutesName.loginPage);
+                                  }, 
+                                  label: "Logout"
+                                ),
+                              )
+                            ],
                           ),
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16.0),
