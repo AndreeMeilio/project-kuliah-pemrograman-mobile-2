@@ -5,6 +5,7 @@ import 'package:products/domains/entities/product.dart';
 import 'package:products/domains/use_cases/get_single_product.dart';
 import 'package:products/presentations/states/product_detail_state.dart';
 
+part 'product_detail_quantity_cubit.dart';
 
 typedef ProductDetailStateType = GenericState<Product, ProductDetailState>;
 class ProductDetailCubit extends Cubit<ProductDetailStateType>{

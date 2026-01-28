@@ -85,10 +85,19 @@ class AppRoutes{
 
         return PageTransition(
           type: PageTransitionType.rightToLeft,
-          child: BlocProvider(
-            create: (context) {
-                return sl.get<ProductDetailCubit>(instanceName: "productDetailCubit");
-            },
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) {
+                    return sl.get<ProductDetailCubit>(instanceName: "productDetailCubit");
+                },
+              ),
+              BlocProvider(
+                create: (context) {
+                    return sl.get<ProductDetailQuantityCubit>(instanceName: "productDetailQuantityCubit");
+                },
+              ),
+            ],
             child: ProductDetailPage(id: idProduct,),
           ),
         );

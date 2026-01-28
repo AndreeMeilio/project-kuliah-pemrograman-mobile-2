@@ -16,12 +16,14 @@ class ProductDetailPage extends StatefulWidget {
 class _ProductDetailPageState extends State<ProductDetailPage> {
 
   late ProductDetailCubit _productDetailCubit;
+  late ProductDetailQuantityCubit _productDetailQuantityCubit;
 
   @override
   void initState(){
     super.initState();
 
     _productDetailCubit = BlocProvider.of<ProductDetailCubit>(context, listen: false);
+    _productDetailQuantityCubit = BlocProvider.of<ProductDetailQuantityCubit>(context, listen: false);
 
     WidgetsBinding.instance.addPostFrameCallback((_){
       _productDetailCubit.getSingleData(id: widget.id);
@@ -143,17 +145,85 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         Expanded(
                           child: Container(
                             height: 0.1.getHeight(context),
-                            alignment: Alignment.centerLeft,
+                            alignment: Alignment.center,
                             color: Theme.of(context).colorScheme.secondary.withAlpha(100),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(horizontal
                               : 16.0),
-                              child: Text(
-                                "\$${state.data?.price}",
-                                style: AppTextStyle.kHeading1.get(),
-                              ),
+                              child: BlocBuilder<ProductDetailQuantityCubit, int>(
+                                builder: (context, stateQuantity){
+                                  final finalPrice = (state.data?.price ?? 0) * stateQuantity;
+                                  return Text(
+                                    "\$$finalPrice",
+                                    style: AppTextStyle.kHeading1.get(),
+                                  );
+                                }
+                              )
                             ),
                           ),
+                        ),
+                        Container(
+                          alignment: Alignment.center,
+                          height: 0.1.getHeight(context),
+                          width: 0.35.getWidth(context),
+                          child:  BlocBuilder<ProductDetailQuantityCubit, int>(
+                            builder: (context, state) {
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                      color: Theme.of(context).colorScheme.secondary.withAlpha(100),
+                                      height: double.infinity,
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: (){
+                                            _productDetailQuantityCubit.changeQuantityProduct(
+                                              type: TypeChangeQuantity.minus
+                                            );
+                                          },
+                                          splashColor: Theme.of(context).colorScheme.onSurface.withAlpha(120),
+                                          child: Icon(Icons.arrow_left, size: 50.0,),
+                                        ),
+                                      ),
+                                    )
+                                  ),
+                                  Expanded(
+                                    flex: 1,
+                                    child: Container(
+                                      color: Theme.of(context).colorScheme.secondary.withAlpha(100),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        state.toString(),
+                                        style: AppTextStyle.kBody1.get().copyWith(fontWeight: FontWeight.bold),
+                                      ),
+                                    )
+                                  ),
+                                  Expanded(
+                                    flex: 2,
+                                    child: Container(
+                                      color: Theme.of(context).colorScheme.secondary.withAlpha(100),
+                                      height: double.infinity,
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        child: InkWell(
+                                          onTap: (){
+                                            _productDetailQuantityCubit.changeQuantityProduct(
+                                              type: TypeChangeQuantity.plus
+                                            );
+                                          },
+                                          splashColor: Theme.of(context).colorScheme.onSurface.withAlpha(120),
+                                          child: Icon(Icons.arrow_right, size: 50.0,),
+                                        ),
+                                      ),
+                                    )
+                                  ),
+                                ],
+                              );
+                            },
+                          )
                         ),
                         Container(
                           color: Theme.of(context).colorScheme.primary,
@@ -183,10 +253,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 );
               } else {
                 return Center(
-                  child: Text(
-                    "There are no data available",
-                    style: AppTextStyle.kBody1.get(),
-                  ),
+                  child: Container()
                 );
               }
             }, 

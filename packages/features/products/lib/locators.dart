@@ -39,4 +39,5 @@ void setupProductLocator(GetIt sl){
   sl.registerFactory<ProductDetailCubit>(() => ProductDetailCubit(), instanceName: "productDetailCubit");
   sl.registerFactory<ProductCategoryCubit>(() => ProductCategoryCubit(), instanceName: "productCategoryCubit");
   sl.registerFactory<ProductFilterCubit>(() => ProductFilterCubit(), instanceName: "productFilterCubit");
+  sl.registerFactory<ProductDetailQuantityCubit>(() => ProductDetailQuantityCubit(), instanceName: "productDetailQuantityCubit");
 }
