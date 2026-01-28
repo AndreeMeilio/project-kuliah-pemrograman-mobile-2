@@ -2,6 +2,7 @@
 
 import 'package:carts/datas/data_sources/remote_data_source.dart';
 import 'package:carts/datas/repositories/cart_repository.dart';
+import 'package:carts/domains/use_cases/get_all_cart_filter.dart';
 import 'package:carts/domains/use_cases/get_all_carts.dart';
 import 'package:carts/domains/use_cases/get_spesific_cart.dart';
 import 'package:carts/presentations/cubits/carts_detail_cubit.dart';
@@ -23,9 +24,13 @@ void setupCartLocator(GetIt sl){
 
   sl.registerLazySingleton<GetAllCarts>(() => GetAllCarts(sl(instanceName: "cartRepository")), instanceName: "getAllCarts");
 
+  sl.registerLazySingleton<GetAllCartFilter>(() => GetAllCartFilter(sl(instanceName: "cartRepository")), instanceName: "getAllCartFilter");
+
   sl.registerFactory<CartsListCubit>(() =>CartsListCubit(), instanceName: "cartsListCubit");
 
   sl.registerFactory<GetSpesificCart>(() => GetSpesificCart(sl(instanceName: "cartRepository"), sl<ProductRepository>(instanceName: "productRepository")), instanceName: "getSpesificCart");
 
   sl.registerFactory<CartsDetailCubit>(() => CartsDetailCubit(), instanceName: "cartsDetailCubit");
+  
+  sl.registerFactory<CartsListFilterCubit>(() => CartsListFilterCubit(), instanceName: "cartsListFilterCubit");
 }

@@ -71,7 +71,7 @@ class ProductListCubit extends Cubit<ProductListStateType>{
       limitQuery = int.parse(dataLimit);
     }
 
-    if (sort case String dataSort when limit != "select_limit"){
+    if (sort case String dataSort when sort != "select_sort"){
       sortQuery = dataSort; 
     }
 

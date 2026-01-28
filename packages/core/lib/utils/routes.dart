@@ -66,6 +66,9 @@ class AppRoutes{
                 create: (context) => sl.get<CartsListCubit>(instanceName: "cartsListCubit"),
               ),
               BlocProvider(
+                create: (context) => sl.get<CartsListFilterCubit>(instanceName: "cartsListFilterCubit"),
+              ),
+              BlocProvider(
                 create: (context) {
                   return sl.get<ProfileCubit>(instanceName: "profileCubit");
                 },

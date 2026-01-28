@@ -17,6 +17,7 @@ dependencies:
   products:
     path: ../../features/products
   bloc: ^9.2.0
+  syncfusion_flutter_datepicker: ^32.1.25
   flutter_bloc: ^9.1.1
 
   get_it: ^9.2.0

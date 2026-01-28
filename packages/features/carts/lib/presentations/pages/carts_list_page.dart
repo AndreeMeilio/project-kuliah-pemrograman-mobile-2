@@ -4,6 +4,7 @@ import 'package:carts/presentations/states/carts_list_state.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class CartsListPage extends StatefulWidget {
   const CartsListPage({super.key});
@@ -15,12 +16,15 @@ class CartsListPage extends StatefulWidget {
 class _CartsListPageState extends State<CartsListPage> {
 
   late CartsListCubit _cartsListCubit;
+  late CartsListFilterCubit _cartsListFilterCubit;
 
   @override
   void initState(){
     super.initState();
 
     _cartsListCubit = BlocProvider.of<CartsListCubit>(context, listen: false);
+    _cartsListFilterCubit = BlocProvider.of<CartsListFilterCubit>(context, listen: false);
+    _cartsListFilterCubit.init();
 
     WidgetsBinding.instance.addPostFrameCallback((_){
       _cartsListCubit.getAllCarts();
@@ -71,79 +75,178 @@ class _CartsListPageState extends State<CartsListPage> {
                             child: Row(
                               spacing: 4.0,
                               children: [
-                                CustomDropdownButton<String>(
-                                  width: 0.3.getWidth(context),
-                                  initialValue: "select_limit", 
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: "select_limit",
-                                      child: Text(
-                                        "Limit",
-                                        style: AppTextStyle.kBody1.get(),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "all",
-                                      child: Text(
-                                        "ALL",
-                                        style: AppTextStyle.kBody1.get(),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "5",
-                                      child: Text(
-                                        "5 Data",
-                                        style: AppTextStyle.kBody1.get(),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "10",
-                                      child: Text(
-                                        "10 Data",
-                                        style: AppTextStyle.kBody1.get(),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "20",
-                                      child: Text(
-                                        "20 Data",
-                                        style: AppTextStyle.kBody1.get(),
-                                      ),
-                                    ),
-                                  ], 
-                                  onChanged: (value) async{
-                                              
-                                  }
+                                SizedBox(
+                                  width: 0.5.getWidth(context),
+                                  child: BlocBuilder<CartsListFilterCubit, CartsListFilterType>(
+                                    builder: (context, state){
+                                      final startDateLabel = state.startDate != null ? AppDateFormat.yyyymmdd(state.startDate!) : "";
+
+                                      final endDateLabel = state.endDate != null ? AppDateFormat.yyyymmdd(state.endDate!) : "";
+
+                                      final outputLabel = (state.startDate != null || state.endDate != null) ? "$startDateLabel - $endDateLabel" : "Select Range Date";
+
+                                      return PrimaryButtonComponent(
+                                        onTap: (){
+                                          showDialog(
+                                            context: context, 
+                                            builder: (context) {
+                                              return Container(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: SfDateRangePicker(
+                                                  extendableRangeSelectionDirection: ExtendableRangeSelectionDirection.both,
+                                                  showActionButtons: true,
+                                                  onCancel: () async{
+                                                    _cartsListFilterCubit.changeDateRangeFilter(
+                                                      newStartDate: null,
+                                                      newEndDate: null
+                                                    );
+
+                                                    Navigator.pop(context);
+
+                                                    await _cartsListCubit.getCartsByFilter(
+                                                      startDate: null,
+                                                      endDate: null,
+                                                      limit: state.limit,
+                                                      sort: state.sort
+                                                    );
+                                                  },
+                                                  initialSelectedRange: (state.startDate != null || state.endDate != null) ? PickerDateRange(
+                                                    state.startDate, 
+                                                    state.endDate
+                                                  ) : null,
+                                                  cancelText: "CLEAR",
+                                                  showTodayButton: true,
+                                                  startRangeSelectionColor: Theme.of(context).colorScheme.primary,
+                                                  endRangeSelectionColor: Theme.of(context).colorScheme.secondary,
+                                                  selectionMode: DateRangePickerSelectionMode.extendableRange,
+                                                  onSubmit: (data) async{
+                                                    final dataRange = data as PickerDateRange?;
+                                                    _cartsListFilterCubit.changeDateRangeFilter(
+                                                      newStartDate: dataRange?.startDate,
+                                                      newEndDate: dataRange?.endDate
+                                                    );
+
+                                                    Navigator.pop(context);
+
+                                                    await _cartsListCubit.getCartsByFilter(
+                                                      startDate: dataRange?.startDate,
+                                                      endDate: dataRange?.endDate,
+                                                      limit: state.limit,
+                                                      sort: state.sort
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        }, 
+                                        label: outputLabel,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0, 
+                                          vertical: 10.0
+                                        ),
+                                        radius: 4.0,
+                                        buttonColor: Colors.white,
+                                      );
+                                    },
+                                  )
                                 ),
-                                CustomDropdownButton<String>(
-                                  width: 0.25.getWidth(context),
-                                  initialValue: "select_sort", 
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: "select_sort",
-                                      child: Text(
-                                        "Sort",
-                                        style: AppTextStyle.kBody1.get(),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "asc",
-                                      child: Text(
-                                        "ASC",
-                                        style: AppTextStyle.kBody1.get(),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: "desc",
-                                      child: Text(
-                                        "DESC",
-                                        style: AppTextStyle.kBody1.get(),
-                                      ),
-                                    ),
-                                  ], 
-                                  onChanged: (value) async{      
-                                  }
+                                BlocBuilder<CartsListFilterCubit, CartsListFilterType>(
+                                  builder: (context, state){
+                                    return CustomDropdownButton<String>(
+                                      width: 0.3.getWidth(context),
+                                      initialValue: state.limit, 
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: "select_limit",
+                                          child: Text(
+                                            "Limit",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "all",
+                                          child: Text(
+                                            "ALL",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "5",
+                                          child: Text(
+                                            "5 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "10",
+                                          child: Text(
+                                            "10 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "20",
+                                          child: Text(
+                                            "20 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                      ], 
+                                      onChanged: (value) async{
+                                        _cartsListFilterCubit.changeLimitFilter(newLimit: value.toString()); 
+
+                                        await _cartsListCubit.getCartsByFilter(
+                                          startDate: state.startDate,
+                                          endDate: state.endDate,
+                                          limit: value,
+                                          sort: state.sort
+                                        );
+                                      }
+                                    );
+                                  },
                                 ),
+                                BlocBuilder<CartsListFilterCubit, CartsListFilterType>(
+                                  builder: (context, state){
+                                    return CustomDropdownButton<String>(
+                                      width: 0.25.getWidth(context),
+                                      initialValue: state.sort, 
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: "select_sort",
+                                          child: Text(
+                                            "Sort",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "asc",
+                                          child: Text(
+                                            "ASC",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "desc",
+                                          child: Text(
+                                            "DESC",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                      ], 
+                                      onChanged: (value) async{ 
+                                        _cartsListFilterCubit.changeSortFilter(newSort: value.toString()); 
+
+                                        await _cartsListCubit.getCartsByFilter(
+                                          startDate: state.startDate,
+                                          endDate: state.endDate,
+                                          limit: state.limit,
+                                          sort: value
+                                        );    
+                                      }
+                                    );
+                                  },
+                                )
                               ],
                             ),
                           )
@@ -213,7 +316,208 @@ class _CartsListPageState extends State<CartsListPage> {
                   ],
                 );
               } else {
-                return Container();
+                return CustomScrollView(
+                  slivers: [
+                    SliverAppBar(
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      floating: true,
+                      snap: true,
+                      pinned: true,
+                      title: Text(
+                        "List Carts",
+                        style: AppTextStyle.kHeading1.get(),
+                      ),
+                      bottom: PreferredSize(
+                        preferredSize: Size.fromHeight(0.1.getHeight(context)), 
+                        child: Container(
+                          height: 0.1.getHeight(context),
+                          alignment: Alignment.centerLeft,
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              spacing: 4.0,
+                              children: [
+                                SizedBox(
+                                  width: 0.5.getWidth(context),
+                                  child: BlocBuilder<CartsListFilterCubit, CartsListFilterType>(
+                                    builder: (context, state){
+                                      final startDateLabel = state.startDate != null ? AppDateFormat.yyyymmdd(state.startDate!) : "";
+
+                                      final endDateLabel = state.endDate != null ? AppDateFormat.yyyymmdd(state.endDate!) : "";
+
+                                      final outputLabel = (state.startDate != null || state.endDate != null) ? "$startDateLabel to $endDateLabel" : "Select Range Date";
+
+                                      return PrimaryButtonComponent(
+                                        onTap: (){
+                                          showDialog(
+                                            context: context, 
+                                            builder: (context) {
+                                              return Container(
+                                                padding: const EdgeInsets.all(16.0),
+                                                child: SfDateRangePicker(
+                                                  extendableRangeSelectionDirection: ExtendableRangeSelectionDirection.both,
+                                                  showActionButtons: true,
+                                                  onCancel: () async{
+                                                    _cartsListFilterCubit.changeDateRangeFilter(
+                                                      newStartDate: null,
+                                                      newEndDate: null
+                                                    );
+
+                                                    Navigator.pop(context);
+
+                                                    await _cartsListCubit.getCartsByFilter(
+                                                      startDate: null,
+                                                      endDate: null,
+                                                      limit: state.limit,
+                                                      sort: state.sort
+                                                    );
+                                                  },
+                                                  initialSelectedRange: (state.startDate != null || state.endDate != null) ? PickerDateRange(
+                                                    state.startDate, 
+                                                    state.endDate
+                                                  ) : null,
+                                                  cancelText: "CLEAR",
+                                                  showTodayButton: true,
+                                                  startRangeSelectionColor: Theme.of(context).colorScheme.primary,
+                                                  endRangeSelectionColor: Theme.of(context).colorScheme.secondary,
+                                                  selectionMode: DateRangePickerSelectionMode.extendableRange,
+                                                  onSubmit: (data) async{
+                                                    final dataRange = data as PickerDateRange?;
+                                                    _cartsListFilterCubit.changeDateRangeFilter(
+                                                      newStartDate: dataRange?.startDate,
+                                                      newEndDate: dataRange?.endDate
+                                                    );
+
+                                                    Navigator.pop(context);
+
+                                                    await _cartsListCubit.getCartsByFilter(
+                                                      startDate: dataRange?.startDate,
+                                                      endDate: dataRange?.endDate,
+                                                      limit: state.limit,
+                                                      sort: state.sort
+                                                    );
+                                                  },
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        }, 
+                                        label: outputLabel,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0, 
+                                          vertical: 10.0
+                                        ),
+                                        radius: 4.0,
+                                        buttonColor: Colors.white,
+                                      );
+                                    },
+                                  )
+                                ),
+                                BlocBuilder<CartsListFilterCubit, CartsListFilterType>(
+                                  builder: (context, state){
+                                    return CustomDropdownButton<String>(
+                                      width: 0.3.getWidth(context),
+                                      initialValue: state.limit, 
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: "select_limit",
+                                          child: Text(
+                                            "Limit",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "all",
+                                          child: Text(
+                                            "ALL",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "5",
+                                          child: Text(
+                                            "5 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "10",
+                                          child: Text(
+                                            "10 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "20",
+                                          child: Text(
+                                            "20 Data",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                      ], 
+                                      onChanged: (value) async{
+                                        _cartsListFilterCubit.changeLimitFilter(newLimit: value.toString()); 
+
+                                        await _cartsListCubit.getCartsByFilter(
+                                          startDate: state.startDate,
+                                          endDate: state.endDate,
+                                          limit: value,
+                                          sort: state.sort
+                                        );
+                                      }
+                                    );
+                                  },
+                                ),
+                                BlocBuilder<CartsListFilterCubit, CartsListFilterType>(
+                                  builder: (context, state){
+                                    return CustomDropdownButton<String>(
+                                      width: 0.25.getWidth(context),
+                                      initialValue: state.sort, 
+                                      items: [
+                                        DropdownMenuItem(
+                                          value: "select_sort",
+                                          child: Text(
+                                            "Sort",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "asc",
+                                          child: Text(
+                                            "ASC",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                        DropdownMenuItem(
+                                          value: "desc",
+                                          child: Text(
+                                            "DESC",
+                                            style: AppTextStyle.kBody1.get(),
+                                          ),
+                                        ),
+                                      ], 
+                                      onChanged: (value) async{ 
+                                        _cartsListFilterCubit.changeSortFilter(newSort: value.toString()); 
+
+                                        await _cartsListCubit.getCartsByFilter(
+                                          startDate: state.startDate,
+                                          endDate: state.endDate,
+                                          limit: state.limit,
+                                          sort: value
+                                        );    
+                                      }
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                          )
+                        )
+                      ),
+                    ),
+                  ],
+                );
               }
             }, 
             listener: (context, state){

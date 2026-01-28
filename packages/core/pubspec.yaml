@@ -29,6 +29,7 @@ dependencies:
   logger: ^2.4.0
   pretty_dio_logger: ^1.4.0
   lottie: ^3.3.2
+  syncfusion_flutter_datepicker: ^32.1.25
 
   products:
     path: ../features/products

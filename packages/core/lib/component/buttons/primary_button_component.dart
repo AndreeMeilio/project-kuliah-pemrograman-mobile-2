@@ -14,7 +14,8 @@ class PrimaryButtonComponent extends StatelessWidget {
     this.splashColor,
     this.radius = AppNumbers.defaultRadius,
     this.labelColor,
-    this.isLoading = false
+    this.isLoading = false,
+    this.padding
   });
 
   final Color? borderColor;
@@ -24,6 +25,7 @@ class PrimaryButtonComponent extends StatelessWidget {
   final Function()? onTap;
   final double radius;
   final Color? labelColor;
+  final EdgeInsetsGeometry? padding;
   final bool isLoading;
 
   @override
@@ -43,7 +45,7 @@ class PrimaryButtonComponent extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(radius)),
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
+            padding: padding != null ? padding! : const EdgeInsets.symmetric(
               horizontal: 24.0,
               vertical: 12.0
             ),
