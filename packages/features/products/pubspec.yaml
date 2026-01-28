@@ -17,6 +17,8 @@ dependencies:
     path: ../../core
   users:
     path: ../../features/users
+  carts:
+    path: ../../features/carts
   dio: ^5.9.0
   get_it: ^9.2.0
   bloc: ^9.2.0

@@ -1,5 +1,8 @@
 
 import 'package:auth/auth.dart';
+import 'package:carts/presentations/cubits/carts_detail_cubit.dart';
+import 'package:carts/presentations/cubits/carts_list_cubit.dart';
+import 'package:carts/presentations/pages/carts_detail_page.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,6 +63,9 @@ class AppRoutes{
                 },
               ),
               BlocProvider(
+                create: (context) => sl.get<CartsListCubit>(instanceName: "cartsListCubit"),
+              ),
+              BlocProvider(
                 create: (context) {
                   return sl.get<ProfileCubit>(instanceName: "profileCubit");
                 },
@@ -99,6 +105,22 @@ class AppRoutes{
               ),
             ],
             child: ProductDetailPage(id: idProduct,),
+          ),
+        );
+        
+      case AppPageRoutesName.cartDetailPage:
+        String idCarts = "";
+        if (args case String id){
+          idCarts = id;
+        }
+
+        return PageTransition(
+          type: PageTransitionType.rightToLeft,
+          child: BlocProvider(
+            create: (context) {
+                return sl.get<CartsDetailCubit>(instanceName: "cartsDetailCubit");
+            },
+            child: CartsDetailPage(id: idCarts,),
           ),
         );
     }

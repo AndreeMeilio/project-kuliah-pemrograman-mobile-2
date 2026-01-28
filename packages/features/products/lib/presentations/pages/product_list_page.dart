@@ -411,7 +411,7 @@ class _ProductListPageState extends State<ProductListPage> {
                                             "\$${state.data?[index].price}",
                                             style: AppTextStyle.kHeading2.get(),
                                           ),
-                                          const SizedBox(height: 16.0,),
+                                          const SizedBox(height: 4.0,),
                                           Wrap(
                                             children: [
                                               Container(
